@@ -42,9 +42,9 @@ Cakupan pembahasan:
 
 | Status | Topik |
 |--------|-------|
-| ✅ | [1.1 ErrorDefinition](./roadmaps/01-Error-Definition-Framework/1.1-ErrorDefinition.md) |
-| ✅ | [1.2 Struktur Enum Error per Modul](./roadmaps/01-Error-Definition-Framework/1.2-Struktur-Enum-Error-per-Modul.md) |
-| 🚧 | [1.3 ErrorDefinitionReader](./roadmaps/01-Error-Definition-Framework/1.3-ErrorDefinitionReader.md) |
+| ✅ | [1.1 ErrorDefinition](./roadmaps/01-error-definition-framework/1.1-error-definition.md) |
+| ✅ | [1.2 Struktur Enum Error per Modul](./roadmaps/01-error-definition-framework/1.2-struktur-enum-error-per-modul.md) |
+| 🚧 | [1.3 ErrorDefinitionReader](./roadmaps/01-error-definition-framework/1.3-error-definition-reader.md) |
 | ⏳ | 1.4 ApplicationException |
 | ⏳ | 1.5 Integrasi FormRequest |
 | ⏳ | 1.6 Format Response JSON Standar |
