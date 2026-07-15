@@ -1,81 +1,141 @@
 # Error Definition Framework
 
-Error Definition Framework is a PHP library for defining, resolving, and standardizing application errors.
+> Sebuah framework untuk mendefinisikan, mengelola, dan membagikan error secara terstruktur, konsisten, dan mudah diintegrasikan ke berbagai kebutuhan operasional.
 
-The project embraces modern PHP features such as enums, attributes, readonly objects, and reflection while following design principles inspired by Laravel. The goal is to provide a familiar developer experience without introducing a completely new programming model.
+## Latar Belakang
 
-Instead of scattering error codes, messages, HTTP status codes, and metadata throughout an application, Error Definition Framework encourages defining every application error in a single, strongly typed source of truth.
+Pada umumnya, error di dalam aplikasi tersebar di berbagai tempat, seperti validation, exception, service, controller, hingga frontend. Akibatnya:
 
-## Philosophy
+* Error code tidak memiliki standar.
+* Pesan error mudah terduplikasi.
+* Sulit didokumentasikan.
+* Sulit diintegrasikan dengan sistem lain seperti monitoring, knowledge base, maupun helpdesk.
+* Setiap aplikasi memiliki cara penanganan error yang berbeda.
 
-The framework is built around a few core principles:
+**Error Definition Framework** hadir untuk menjadikan error sebagai **aset aplikasi** yang memiliki definisi baku dan dapat dimanfaatkan oleh berbagai kebutuhan, tanpa mengubah cara developer membangun aplikasi sehari-hari.
 
-* **Single Source of Truth** — Every application error is defined once.
-* **Strongly Typed** — Error codes are represented by enums instead of magic strings.
-* **Metadata Driven** — Error behavior is described using PHP Attributes.
-* **Framework Friendly** — Designed to integrate naturally with Laravel while remaining independent from it.
-* **Convention over Configuration** — Favor sensible defaults over excessive configuration.
-* **Developer Experience First** — Keep APIs simple, predictable, and easy to maintain.
+Framework ini menjadikan **Laravel sebagai source of truth**, sedangkan aplikasi lain (Vue, Mobile, dan lain-lain) cukup menggunakan hasil generate yang disediakan.
 
-## Why?
+---
 
-Many applications eventually suffer from problems such as:
+# Roadmap
 
-* Duplicated error codes.
-* Inconsistent API responses.
-* Scattered validation messages.
-* Different exception formats across modules.
-* Difficult-to-maintain documentation.
+Pengembangan dibagi menjadi dua tahap besar.
 
-Error Definition Framework addresses these issues by introducing a single definition that can be reused throughout the application.
+## Tahap 1 — Error Definition Framework
 
-## Example
+Tahap ini berfokus pada bagaimana **setiap aplikasi** mendefinisikan dan mengelola error secara konsisten.
 
-```php
-enum SuratMasukError: string implements ErrorCode
-{
-    #[ErrorDefinition(
-        message: 'Draft is currently locked.',
-        category: ErrorCategory::BUSINESS,
-        httpStatus: 409,
-    )]
-    case DRAFT_LOCKED = 'SM-WF-001';
-}
+Cakupan pembahasan:
+
+* Struktur error
+* Throw / Catch / Render
+* Penamaan error code
+* Kategori
+* Severity
+* Metadata
+* Integrasi Validation
+* Logging
+* Generate manifest
+
+### Roadmap Implementasi
+
+* [ ] 1.1 Bentuk final `ErrorDefinition`
+* [ ] 1.2 Struktur enum per modul
+* [ ] 1.3 `ErrorDefinitionReader`
+* [ ] 1.4 `ApplicationException`
+* [ ] 1.5 Integrasi `FormRequest`
+* [ ] 1.6 Format response JSON standar
+* [ ] 1.7 Logging dan Context
+* [ ] 1.8 Validator / Linter
+* [ ] 1.9 Generator `error-codes.ts`
+* [ ] 1.10 Generator `error-catalog.json`
+
+Tahap ini menjadi pondasi utama. Selama sepuluh poin tersebut belum stabil, pembahasan tidak akan berlanjut ke registry terpusat.
+
+---
+
+## Tahap 2 — Central Error Registry
+
+Setelah setiap aplikasi memiliki Error Definition Framework yang matang, tahap berikutnya adalah membangun **Central Error Registry**.
+
+Fokus pembahasan:
+
+* Publish catalog dari aplikasi
+* Validasi schema
+* Versioning
+* Duplicate detection
+* Ownership
+* Pencarian
+* Sinkronisasi lintas aplikasi
+* Dashboard registry
+* Integrasi dengan sistem lain
+
+Central Error Registry **bukan source of truth**, melainkan tempat mengumpulkan error definition dari berbagai aplikasi.
+
+---
+
+# Prinsip Desain
+
+Framework ini dibangun dengan beberapa prinsip berikut:
+
+* Laravel merupakan **source of truth**.
+* Error hanya didefinisikan satu kali.
+* Metadata error ditempel menggunakan **PHP Attribute**.
+* Error code direpresentasikan menggunakan **PHP Backed Enum**.
+* Frontend tidak mendefinisikan ulang error, tetapi menggunakan hasil generate.
+* Framework tidak bergantung pada struktur folder tertentu.
+* Runtime aplikasi tidak bergantung pada Central Error Registry.
+* Central Error Registry hanya menjadi konsumen dari Error Definition Framework.
+
+---
+
+# Resource yang Akan Dihasilkan
+
+Framework akan menghasilkan beberapa resource yang dapat digunakan oleh aplikasi lain.
+
+```text
+Laravel
+│
+├── error-codes.ts
+└── error-catalog.json
 ```
 
-Resolving an error definition is straightforward:
+Dengan pendekatan ini, frontend dapat menggunakan error code dan metadata yang sama tanpa melakukan duplikasi.
 
-```php
-$definition = $reader->read(
-    SuratMasukError::DRAFT_LOCKED
-);
+---
 
-$definition->code;
-$definition->message;
-$definition->httpStatus;
+# Gambaran Arsitektur
+
+```text
+Aplikasi Laravel
+        │
+        ▼
+Error Definition Framework
+        │
+        ├── Exception
+        ├── Validation
+        ├── Logging
+        ├── Generator TypeScript
+        └── Generator Error Catalog
+                │
+                ▼
+Central Error Registry
+        │
+        ├── Knowledge Base
+        ├── Search
+        ├── Ownership
+        ├── Analytics
+        ├── Monitoring
+        └── Integrasi ITSM
 ```
 
-## Roadmap
+---
 
-The framework is being developed incrementally.
+# Status Saat Ini
 
-Current roadmap:
+Repository ini saat ini masih berfokus pada **Tahap 1**, yaitu membangun pondasi **Error Definition Framework**.
 
-1. Error Definition Framework
+Target utamanya adalah menghasilkan mekanisme pendefinisian error yang konsisten, mudah digunakan oleh developer, serta dapat menghasilkan berbagai resource secara otomatis.
 
-   * Error Definition
-   * Error Definition Reader
-   * Application Exception
-   * Laravel Validation Integration
-   * Standard JSON Response
-   * Logging & Context
-   * Error Linter
-   * TypeScript Error Code Generator
-   * Error Catalog Generator
-
-Future roadmap:
-
-* Central Error Registry
-* Knowledge Base Integration
-* ITSM Integration
-* Error Analytics
+Setelah pondasi tersebut matang dan stabil, barulah pengembangan dilanjutkan ke **Central Error Registry** sebagai layanan terpisah.
