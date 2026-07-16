@@ -22,3 +22,4 @@ Dokumentasi Error Definition Framework dibagi berdasarkan tujuan informasi.
 - [1.3 ErrorDefinitionReader](./decisions/1-error-definition-framework/1.3-error-definition-reader.md)
   - [1.3.1 Caching dan Siklus Proses](./decisions/1-error-definition-framework/1.3.1-caching-dan-siklus-proses.md)
 - [1.4 ApplicationException](./decisions/1-error-definition-framework/1.4-application-exception.md)
+- [1.5 Validation Error Mapping](./decisions/1-error-definition-framework/1.5-validation-error-mapping.md)

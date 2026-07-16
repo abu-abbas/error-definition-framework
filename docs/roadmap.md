@@ -10,7 +10,7 @@ Roadmap mencatat status pekerjaan. Alasan dan keputusan desain didokumentasikan 
 - [x] [1.2 Struktur Enum Error per Modul](./decisions/1-error-definition-framework/1.2-struktur-enum-error-per-modul.md)
 - [ ] [1.3 ErrorDefinitionReader](./decisions/1-error-definition-framework/1.3-error-definition-reader.md)
 - [x] [1.4 Application Exception](./decisions/1-error-definition-framework/1.4-application-exception.md)
-- [ ] 1.5 Integrasi FormRequest
+- [x] [1.5 Validation Error Mapping](./decisions/1-error-definition-framework/1.5-validation-error-mapping.md)
 - [ ] 1.6 Format Response JSON Standar
 - [ ] 1.7 Logging & Context
 - [ ] 1.8 Validator / Linter

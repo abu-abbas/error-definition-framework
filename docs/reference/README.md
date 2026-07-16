@@ -6,3 +6,4 @@
 - [ResolvedErrorDefinition](./resolved-error-definition.md)
 - [ErrorDefinitionReader](./error-definition-reader.md)
 - [ApplicationException](./application-exception.md)
+- [Validation Integration](./validation-integration.md)
