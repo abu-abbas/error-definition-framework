@@ -35,3 +35,4 @@ Mulai dari [documentation index](./docs/README.md).
 - [Guides](./docs/guides/)
 - [API reference](./docs/reference/)
 - [Roadmap](./docs/roadmap.md)
+- [Contributing](./CONTRIBUTING.md)
