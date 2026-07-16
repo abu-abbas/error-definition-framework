@@ -4,7 +4,7 @@ Framework untuk mendefinisikan, mengelola, dan membagikan error secara terstrukt
 
 ## Filosofi
 
-- Laravel merupakan source of truth.
+- PHP (khususnya Framework Laravel) merupakan source of truth.
 - Setiap error didefinisikan satu kali.
 - Error code menggunakan PHP Backed Enum.
 - Metadata error menggunakan PHP Attribute.
