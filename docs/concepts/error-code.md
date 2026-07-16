@@ -1,32 +1,19 @@
 # Error Code
 
-Error code adalah identifier typed yang merepresentasikan kondisi error secara unik.
+[← Kembali ke Concepts](./README.md)
 
-Error code menggunakan PHP Backed Enum dan didefinisikan satu kali pada enum case.
+> **TL;DR:** error code adalah identitas tetap untuk sebuah kondisi gagal, seperti nomor perkara yang tidak berubah meskipun penjelasannya diperbarui.
 
-```php
-enum SuratMasukError: string implements ErrorCode
-{
-    case DRAFT_LOCKED = 'SM-WF-001';
-}
-```
+Contoh `SM-WF-001` dapat digunakan untuk menandai bahwa draft Surat Masuk tidak dapat diubah karena status workflow tertentu. Pengguna melihat pesan yang mudah dipahami, sedangkan developer, QA, log, dan helpdesk menggunakan kode yang sama untuk mengenali kejadian tersebut.
 
-## Format
+## Bagian Error Code
 
-```text
-SM-WF-001
-│  │   └── nomor urut
-│  └────── kategori atau konteks error
-└───────── prefix modul atau fitur
-```
+Sebuah error code terdiri dari:
 
-Contoh prefix:
+- prefix modul atau fitur, misalnya `SM` untuk Surat Masuk;
+- singkatan category atau konteks, misalnya `WF` untuk workflow;
+- nomor urut, misalnya `001`.
 
-```text
-SM   = Surat Masuk
-USR  = User
-ROL  = Role
-URA  = User Role Assignment
-```
+Error code yang telah digunakan tidak boleh diberikan kepada kondisi lain. Pesan dapat diperbaiki, tetapi identitas error harus tetap stabil agar log, integrasi, dan dokumentasi tidak salah menghubungkan kejadian.
 
-Nomor yang telah digunakan tidak boleh digunakan ulang. Prefix harus konsisten dalam satu konteks dan tidak boleh ambigu.
+Cara menyusun enum dan prefix dijelaskan pada [panduan pengorganisasian error](../guides/organizing-error-enums.md).

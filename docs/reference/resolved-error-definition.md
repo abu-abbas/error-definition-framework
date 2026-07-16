@@ -1,5 +1,7 @@
 # ResolvedErrorDefinition Reference
 
+[← Kembali ke Reference](./README.md)
+
 `ResolvedErrorDefinition` adalah DTO hasil penggabungan error code dari enum dengan metadata dari `ErrorDefinition`.
 
 ```php

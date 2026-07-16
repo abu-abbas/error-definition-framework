@@ -1,24 +1,18 @@
 # Error Severity
 
-`ErrorSeverity` menunjukkan tingkat dampak error terhadap pengguna, proses bisnis, atau layanan.
+[← Kembali ke Concepts](./README.md)
 
-Baseline severity yang umum digunakan:
+> **TL;DR:** severity menjawab "seberapa besar dampak error ini terhadap pekerjaan pengguna atau layanan?".
 
-```php
-enum ErrorSeverity: string
-{
-    case LOW = 'low';
-    case MEDIUM = 'medium';
-    case HIGH = 'high';
-    case CRITICAL = 'critical';
-}
-```
+Form yang belum lengkap biasanya berdampak rendah karena pengguna dapat memperbaikinya sendiri. Sebaliknya, layanan tanda tangan elektronik yang tidak tersedia dapat berdampak tinggi karena menghentikan proses penting bagi banyak pengguna.
 
-| Severity | Dampak |
-|----------|--------|
-| `LOW` | Dampak terbatas dan proses utama masih dapat dilanjutkan. |
-| `MEDIUM` | Operasi tertentu gagal, tetapi layanan masih dapat digunakan. |
-| `HIGH` | Fitur atau proses penting tidak dapat digunakan dan memerlukan perhatian. |
-| `CRITICAL` | Layanan utama terganggu atau berpotensi menyebabkan dampak luas. |
+## Tingkat Dampak
 
-Severity digunakan oleh logging, monitoring, dan analisis operasional. Severity tidak menentukan penyebab error.
+| Severity | Makna bisnis |
+|----------|--------------|
+| Low | Dampak terbatas; pengguna masih dapat melanjutkan pekerjaan setelah koreksi sederhana. |
+| Medium | Satu operasi gagal atau memerlukan perhatian, tetapi layanan utama masih tersedia. |
+| High | Fitur atau proses penting tidak dapat digunakan dan memerlukan penanganan. |
+| Critical | Layanan utama terganggu, berdampak luas, atau berisiko menyebabkan kerusakan serius. |
+
+Severity digunakan untuk membantu logging, monitoring, prioritas penanganan, dan analisis operasional. Severity tidak menjelaskan penyebab error; informasi tersebut merupakan tugas [Error Category](./error-category.md).

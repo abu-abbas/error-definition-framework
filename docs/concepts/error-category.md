@@ -1,21 +1,22 @@
 # Error Category
 
-`ErrorCategory` mengelompokkan error berdasarkan jenis atau konteks penyebabnya. Category tidak menunjukkan tingkat dampak error.
+[← Kembali ke Concepts](./README.md)
 
-Baseline category yang umum digunakan:
+> **TL;DR:** category menjawab "error ini terjadi karena jenis masalah apa?", bukan "seberapa parah dampaknya?".
 
-```php
-enum ErrorCategory: string
-{
-    case VALIDATION = 'validation';
-    case AUTHENTICATION = 'authentication';
-    case AUTHORIZATION = 'authorization';
-    case NOT_FOUND = 'not_found';
-    case BUSINESS_RULE = 'business_rule';
-    case WORKFLOW = 'workflow';
-    case INTEGRATION = 'integration';
-    case SYSTEM = 'system';
-}
-```
+Ketika nomor surat belum diisi, penyebabnya adalah validation. Ketika surat tidak dapat diubah karena sudah masuk tahap persetujuan, penyebabnya adalah workflow. Keduanya dapat sama-sama menghentikan satu tindakan, tetapi berasal dari jenis masalah yang berbeda.
 
-Category dipilih berdasarkan penyebab error, bukan berdasarkan halaman tempat error ditampilkan. Nilai dapat diperluas sesuai kebutuhan aplikasi tanpa mengubah makna nilai yang sudah digunakan.
+## Baseline Category
+
+| Category | Makna bisnis |
+|----------|--------------|
+| Validation | Data yang diberikan belum memenuhi aturan input. |
+| Authentication | Identitas pengguna belum atau tidak dapat diverifikasi. |
+| Authorization | Pengguna tidak memiliki hak untuk melakukan tindakan. |
+| Not Found | Data atau resource yang diminta tidak ditemukan. |
+| Business Rule | Tindakan bertentangan dengan aturan bisnis. |
+| Workflow | Tindakan tidak sesuai dengan status atau tahapan proses. |
+| Integration | Pertukaran data dengan sistem lain mengalami masalah. |
+| System | Aplikasi atau infrastrukturnya mengalami kegagalan internal. |
+
+Category dipilih berdasarkan penyebab error, bukan berdasarkan halaman tempat error muncul. Daftar ini dapat diperluas ketika terdapat jenis penyebab baru yang benar-benar berbeda.

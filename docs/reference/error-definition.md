@@ -1,5 +1,7 @@
 # ErrorDefinition Reference
 
+[← Kembali ke Reference](./README.md)
+
 ```php
 #[Attribute(Attribute::TARGET_CLASS_CONSTANT)]
 final readonly class ErrorDefinition

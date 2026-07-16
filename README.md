@@ -31,6 +31,7 @@ enum SuratMasukError: string implements ErrorCode
 Mulai dari [documentation index](./docs/README.md).
 
 - [Design decisions](./docs/decisions/)
+- [Concepts](./docs/concepts/)
+- [Guides](./docs/guides/)
+- [API reference](./docs/reference/)
 - [Roadmap](./docs/roadmap.md)
-
-Concepts, API reference, dan guides akan ditambahkan bersama implementasinya.
