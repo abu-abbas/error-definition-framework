@@ -24,9 +24,9 @@ Alasan dan keputusan desain didokumentasikan secara terpisah pada [Decisions](./
 
 - [ ] Publish catalog dari aplikasi
 - [ ] Validasi schema
-- [ ] Versioning
 - [ ] Duplicate detection
 - [ ] Ownership
+- [ ] Versioning
 - [ ] Pencarian
 - [ ] Sinkronisasi lintas aplikasi
 - [ ] Dashboard registry

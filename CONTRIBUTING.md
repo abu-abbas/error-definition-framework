@@ -26,6 +26,14 @@ Detail implementasi, contoh cara pakai, dan struktur folder ditempatkan pada `gu
 
 Istilah teknis baru yang digunakan lintas dokumen harus ditambahkan ke [glossary](./docs/concepts/istilah.md).
 
+### Configuration
+
+Config key baru wajib:
+
+- dikelompokkan berdasarkan feature area, misalnya `logging.additional_sensitive_keys`, bukan `additional_sensitive_keys` pada root config;
+- menggunakan `snake_case`;
+- didaftarkan pada [Configuration Reference](./docs/reference/configuration.md) dalam pull request yang sama dengan decision doc yang menetapkannya.
+
 ## Sebelum Mengirim Perubahan
 
 - Pastikan seluruh link Markdown lokal valid.
