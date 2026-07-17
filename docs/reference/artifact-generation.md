@@ -92,7 +92,9 @@ return [
 ];
 ```
 
-Kedua path harus menunjuk file yang dapat ditulis. Generator tidak menentukan apakah artifact disimpan dalam Git; keputusan tersebut mengikuti build workflow aplikasi.
+Kedua path harus menunjuk file yang dapat ditulis. Artifact tidak disimpan dalam Git secara default dan dibuat ulang oleh local development atau CI dari Error Definition PHP.
+
+CI menjalankan normal generation sebelum frontend build dan publication catalog. Check mode digunakan apabila project secara eksplisit memilih menyimpan generated artifact dalam Git.
 
 ## Formatting
 

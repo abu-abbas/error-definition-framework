@@ -85,7 +85,21 @@ Catalog memuat metadata runtime:
 
 Catalog lokal dapat digunakan tooling atau disiapkan sebagai artifact publish. Jangan menambahkan owner, SLA, atau Knowledge Base ke generated file karena enrichment tersebut dikelola oleh registry.
 
-## Memeriksa Artifact pada CI
+## Menghasilkan Artifact pada CI
+
+Jalankan normal generation setelah PHP dependency tersedia dan sebelum frontend build atau publication catalog:
+
+```shell
+php artisan error-definition:generate
+```
+
+Artifact tidak perlu disimpan dalam Git. Generation failure menghentikan pipeline, sedangkan hasil yang berhasil digunakan oleh tahap build berikutnya.
+
+Production instance menerima hasil build dan tidak menjalankan generator ketika aplikasi boot.
+
+## Memeriksa Versioned Artifact
+
+Project yang secara eksplisit menyimpan generated artifact dalam Git dapat memeriksa sinkronisasinya tanpa mengubah file:
 
 ```shell
 php artisan error-definition:generate --check
@@ -100,4 +114,4 @@ stale       storage/app/error-definition/error-catalog.json
 1 stale artifact
 ```
 
-Command mengembalikan exit code `1` tanpa mengubah working tree. Jalankan normal generation dan commit artifact apabila build workflow project menyimpan generated file dalam Git.
+Command mengembalikan exit code `1` tanpa mengubah working tree. Workflow ini bersifat opt-in dan bukan default framework.
