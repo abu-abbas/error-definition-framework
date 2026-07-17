@@ -12,3 +12,4 @@ Keputusan desain untuk pondasi Error Definition Framework.
 - [1.4 ApplicationException](./1.4-application-exception.md)
 - [1.5 Validation Error Mapping](./1.5-validation-error-mapping.md)
 - [1.6 Format Response JSON Standar](./1.6-format-response-json-standar.md)
+- [1.7 Logging dan Context](./1.7-logging-dan-context.md)

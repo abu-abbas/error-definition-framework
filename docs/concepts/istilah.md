@@ -20,9 +20,12 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 ## C
 
 - *Cache*: Penyimpanan sementara untuk data yang akan digunakan kembali agar tidak perlu dihitung atau dibaca berulang kali. Reader memakai in-memory cache untuk menyimpan metadata error yang sudah di-resolve selama process berjalan.
+- *Camel Case*: Gaya penulisan beberapa kata tanpa spasi dengan huruf kapital pada awal kata berikutnya, misalnya `accessToken`. Sanitizer menormalkannya agar cocok dengan key seperti `access_token`.
 - *Category*: Kelompok yang menunjukkan asal atau konteks sebuah error, misalnya validation, authentication, atau business rule. Category membantu consumer menentukan cara penanganan tanpa membaca pesan error.
 - *Closure*: Fungsi tanpa nama yang dapat disimpan atau diteruskan sebagai nilai. Laravel menggunakannya antara lain untuk rule dan validation tambahan yang ditentukan saat runtime.
 - *Consumer*: Komponen atau aplikasi yang menggunakan data dari framework, misalnya exception handler, logger, API client, atau generator katalog error.
+- *Correlation ID*: Identifier yang menghubungkan log dari request atau proses yang sama di beberapa komponen. Framework menerima ID tersebut melalui runtime context, tetapi tidak membuatnya sendiri.
+- *Credential*: Informasi rahasia yang digunakan untuk membuktikan identitas atau memperoleh akses, seperti password, token, dan API key. Credential harus disamarkan sebelum masuk log.
 
 ## D
 
@@ -61,6 +64,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Immutable*: Sifat data yang tidak dapat diubah setelah dibuat. Metadata immutable aman disimpan dalam cache lintas request karena nilainya tetap selama process berjalan.
 - *Interface*: Kontrak PHP yang menetapkan kemampuan atau peran sebuah tipe tanpa menentukan seluruh implementasinya. Class atau enum yang mengimplementasikannya menyatakan bahwa kontrak tersebut dipenuhi.
 - *Intersection Type*: Tipe PHP yang mewajibkan sebuah nilai memenuhi beberapa tipe sekaligus dan tersedia sejak PHP 8.1. Penulisan `ErrorCode&BackedEnum` berarti input harus merupakan `ErrorCode` sekaligus `BackedEnum`.
+- *ISO 8601 (International Organization for Standardization 8601)*: Standar penulisan tanggal dan waktu yang tidak ambigu, misalnya `2026-07-17T10:30:00+07:00`. Sanitizer menggunakan format ini untuk nilai tanggal.
 - *ITSM (Information Technology Service Management)*: Praktik untuk merancang, menyediakan, mengelola, dan meningkatkan layanan teknologi informasi. Metadata error dapat membantu proses ITSM seperti klasifikasi insiden, penentuan prioritas, dan penyusunan knowledge base.
 
 ## J
@@ -77,12 +81,15 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Linter*: Alat pemeriksaan otomatis yang mencari kesalahan atau ketidakkonsistenan tanpa menjalankan seluruh alur aplikasi. Error Linter direncanakan untuk mengaudit definisi dan mapping error.
 - *Locale*: Pengaturan bahasa dan wilayah yang digunakan aplikasi ketika memilih format atau terjemahan. Locale aktif menentukan bahasa validation message yang dihasilkan Laravel.
 - *Localization*: Proses menyesuaikan teks dengan bahasa atau wilayah pengguna. Validation summary tetap menggunakan mekanisme Laravel agar mengikuti locale aplikasi.
+- *Log Channel*: Tujuan atau jalur keluaran log yang dikonfigurasi aplikasi, misalnya file, syslog, atau layanan monitoring. Framework menggunakan channel default Laravel.
+- *Log Level*: Tingkat kepentingan sebuah log event, seperti `info`, `warning`, `error`, atau `critical`. Reporter memilih level berdasarkan severity Error Definition.
 - *Long-running Process*: Process yang tetap hidup untuk menangani banyak pekerjaan atau request, seperti Laravel Octane dan Queue Worker. Data per-request tidak boleh tertinggal pada process semacam ini.
 
 ## M
 
 - *Marker Interface*: Interface tanpa method yang hanya menandai bahwa sebuah tipe dimaksudkan untuk peran tertentu. `ErrorCode` digunakan untuk membedakan enum error dari Backed Enum lain seperti status atau role.
 - *Microservice*: Layanan kecil yang dikembangkan dan dijalankan secara terpisah untuk menangani kemampuan tertentu. Framework tidak mewajibkan arsitektur ini.
+- *Middleware*: Komponen yang memproses request sebelum atau sesudah logic utama aplikasi. Middleware dapat menyediakan correlation ID sebelum exception terjadi.
 - *Monolith*: Arsitektur aplikasi yang menempatkan banyak fitur atau modul dalam satu aplikasi yang dirilis bersama. Struktur berbasis domain tetap dapat digunakan tanpa harus memecah aplikasi menjadi microservice.
 
 ## O
@@ -93,30 +100,40 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## P
 
-- *Placeholder*: Penanda dalam template pesan yang akan diganti dengan nilai sebenarnya, misalnya `:attribute` atau `:min`. Laravel memproses placeholder agar pesan tetap sesuai dengan field dan parameter validation.
 - *PHP (PHP: Hypertext Preprocessor)*: Bahasa pemrograman yang digunakan untuk membangun framework ini. Fitur enum, attribute, exception, dan reflection PHP menjadi bagian utama desainnya.
+- *Pipeline*: Rangkaian komponen yang memproses data atau kejadian secara berurutan. Reporter terhubung ke pipeline exception Laravel agar error dicatat pada satu boundary.
+- *Placeholder*: Penanda dalam template pesan yang akan diganti dengan nilai sebenarnya, misalnya `:attribute` atau `:min`. Laravel memproses placeholder agar pesan tetap sesuai dengan field dan parameter validation.
+- *PSR-3 (PHP Standards Recommendation 3)*: Standar interface logger pada ekosistem PHP. Framework menggunakannya agar logging tidak bergantung pada satu library atau tujuan log tertentu.
 - *Pure Enum*: Enum PHP yang case-nya hanya memiliki nama tanpa nilai dasar `string` atau `int`. Framework memilih Backed Enum karena error code memerlukan nilai string yang stabil.
 
 ## R
 
 - *Readonly*: Fitur PHP yang mencegah property diubah setelah diinisialisasi. Readonly property tersedia sejak PHP 8.1, sedangkan readonly class tersedia sejak PHP 8.2.
+- *Recursive*: Proses yang menerapkan aturan yang sama kembali pada data di dalam data tersebut. Sanitizer bekerja secara recursive agar sensitive key di nested array tetap terlindungi.
+- *Redaction*: Proses menghapus atau menyamarkan bagian data sensitif sebelum data digunakan atau disimpan. Framework menggunakan nilai `[REDACTED]` agar struktur context tetap terlihat tanpa mengekspos nilainya.
 - *Reflection*: Fitur PHP untuk membaca struktur dan metadata kode saat aplikasi berjalan. `ErrorDefinitionReader` menggunakannya untuk membaca attribute dari enum case.
 - *Registry*: Katalog terpusat yang mengumpulkan definisi error dari berbagai modul atau aplikasi. Registry dapat digunakan untuk pencarian, dokumentasi, dan integrasi operasional.
 - *Renderer*: Komponen yang mengubah exception atau data error menjadi response yang dikirim kepada client. Renderer bertanggung jawab atas format response, bukan Reader atau exception.
+- *Reporter*: Komponen yang mengubah exception menjadi event untuk logging atau monitoring. Reporter tidak mengubah response yang diterima client.
+- *Resource*: Nilai khusus PHP yang mewakili koneksi atau handle eksternal seperti file dan stream. Sanitizer tidak mencoba menyerialisasi isinya.
 - *Runtime*: Periode ketika aplikasi sedang berjalan dan memproses request, job, atau command. Informasi runtime dapat berbeda dari metadata error yang bersifat tetap.
 - *Runtime Context*: Informasi mengenai kejadian tertentu ketika aplikasi berjalan, misalnya ID user atau ID dokumen. Data ini berguna untuk logging, tetapi harus disanitasi dan tidak otomatis dikirim kepada client.
 
 ## S
 
 - *Sanitizer*: Komponen yang membersihkan, menghapus, atau menyamarkan data sensitif sebelum dikirim ke log dan monitoring. Sanitizer mencegah informasi seperti password atau token ikut tersimpan.
+- *Scalar*: Nilai tunggal sederhana seperti string, integer, float, atau boolean. Scalar identifier lebih aman dan ringkas untuk runtime context daripada seluruh object.
+- *Sentry*: Layanan monitoring yang merekam exception, stack trace, dan context untuk membantu diagnosis masalah aplikasi. Framework tidak bergantung langsung pada Sentry dan menggunakan integrasi logging milik aplikasi.
 - *Serialization*: Proses mengubah object atau data menjadi format yang dapat disimpan atau dipertukarkan, misalnya JSON. Hasil resolve dibuat sederhana agar mudah diserialisasi.
 - *Service Provider*: Class Laravel yang mendaftarkan dan mengaktifkan komponen aplikasi. Framework menggunakannya untuk mengaktifkan renderer tanpa registrasi manual pada setiap aplikasi.
 - *Severity*: Tingkat dampak sebuah error terhadap pengguna, proses bisnis, atau layanan. Nilai ini membantu menentukan prioritas penanganan dan logging.
+- *Side Effect*: Perubahan atau tindakan di luar nilai yang dikembalikan sebuah method, misalnya menulis log atau mengirim event. Logging tidak ditempatkan di dalam exception agar data carrier tidak memiliki side effect.
 - *Singleton*: Pola penggunaan satu instance object yang sama selama lifecycle container atau process. Reader direkomendasikan sebagai singleton agar cache internalnya dapat digunakan kembali.
 - *SLA (Service Level Agreement)*: Kesepakatan mengenai target kualitas layanan, seperti waktu respons, ketersediaan, atau waktu penyelesaian gangguan. Category dan severity dapat membantu menentukan SLA yang relevan.
 - *Source of Truth*: Sumber utama yang dianggap paling benar untuk suatu data. Error Definition PHP menjadi source of truth agar message dan metadata tidak didefinisikan ulang oleh setiap consumer.
 - *Stack Trace*: Rekaman urutan pemanggilan function atau method sebelum exception terjadi. Previous exception dipertahankan agar jejak penyebab awal tidak hilang.
 - *Static Analysis*: Pemeriksaan source code tanpa menjalankan aplikasinya untuk menemukan masalah tipe, kontrak, atau pola kode. Enum dan DTO yang typed membantu alat static analysis mendeteksi kesalahan lebih awal.
+- *Structured Log*: Log yang menyimpan informasi dalam field bernama, bukan hanya satu kalimat. Struktur ini memungkinkan pencarian berdasarkan error code, category, severity, atau identifier context.
 
 ## T
 
