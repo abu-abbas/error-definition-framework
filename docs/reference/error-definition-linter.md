@@ -110,4 +110,4 @@ php artisan error-definition:lint [--strict]
 
 Command menampilkan finding berdasarkan level, rule ID, source, dan message, kemudian menampilkan jumlah error serta warning.
 
-Command memperoleh target aplikasi dari discovery mechanism yang ditetapkan pada Stage 1.9. API `lint()` tetap dapat digunakan secara langsung dengan target eksplisit.
+Command memperoleh target aplikasi dari [Error Definition Discovery](../decisions/1-error-definition-framework/1.9-error-definition-discovery-mechanism.md). API `lint()` tetap dapat digunakan secara langsung dengan target eksplisit.

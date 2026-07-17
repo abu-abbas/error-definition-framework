@@ -10,3 +10,4 @@
 - [ErrorResponseRenderer](./error-response-renderer.md)
 - [Logging Integration](./logging-integration.md)
 - [ErrorDefinitionLinter](./error-definition-linter.md)
+- [ErrorDefinitionDiscovery](./error-definition-discovery.md)

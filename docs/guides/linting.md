@@ -6,7 +6,7 @@ Panduan ini menerapkan [Decision 1.8](../decisions/1-error-definition-framework/
 
 ## Menjalankan Pemeriksaan
 
-Setelah discovery mechanism tersedia, jalankan seluruh pemeriksaan aplikasi melalui Artisan:
+Discovery mechanism menyediakan seluruh target aplikasi ketika pemeriksaan dijalankan melalui Artisan:
 
 ```shell
 php artisan error-definition:lint
@@ -56,7 +56,7 @@ if ($report->hasErrors()) {
 }
 ```
 
-Daftar eksplisit ini hanya untuk test atau pemanggilan engine secara langsung. Jangan memeliharanya sebagai registry aplikasi; Stage 1.9 akan menyediakan target otomatis.
+Daftar eksplisit ini hanya untuk test atau pemanggilan engine secara langsung. Jangan memeliharanya sebagai registry aplikasi; [Decision 1.9](../decisions/1-error-definition-framework/1.9-error-definition-discovery-mechanism.md) menyediakan target otomatis.
 
 ## CI
 

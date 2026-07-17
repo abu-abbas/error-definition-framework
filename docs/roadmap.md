@@ -16,7 +16,7 @@ Alasan dan keputusan desain didokumentasikan secara terpisah pada [Decisions](./
 - [x] [1.6 Format Response JSON Standar](./decisions/1-error-definition-framework/1.6-format-response-json-standar.md)
 - [x] [1.7 Logging & Context](./decisions/1-error-definition-framework/1.7-logging-dan-context.md)
 - [x] [1.8 Validator / Linter](./decisions/1-error-definition-framework/1.8-validator-dan-linter.md)
-- [ ] 1.9 Error Definition Discovery Mechanism
+- [x] [1.9 Error Definition Discovery Mechanism](./decisions/1-error-definition-framework/1.9-error-definition-discovery-mechanism.md)
 - [ ] 1.10 Generator `error-codes.ts`
 - [ ] 1.11 Generator `error-catalog.json`
 

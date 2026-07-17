@@ -6,12 +6,14 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## A
 
+- *Abstract Class*: Class yang tidak dapat dibuat langsung dan biasanya menjadi dasar bagi class lain. Discovery hanya mengembalikan concrete FormRequest yang benar-benar dapat digunakan.
 - *ADR (Architecture Decision Record)*: Dokumen yang mencatat sebuah keputusan arsitektur, alasan pemilihannya, alternatif yang dipertimbangkan, dan konsekuensinya. Dokumen pada bagian Decisions menggunakan pendekatan ini.
 - *API (Application Programming Interface)*: Kontrak yang menentukan cara aplikasi atau komponen berkomunikasi. Dalam framework ini, API dapat berupa public class, method, interface, atau struktur response.
 - *Artisan*: Command-line interface bawaan Laravel untuk menjalankan command aplikasi, seperti migration, queue worker, dan Error Definition Linter.
 - *AST (Abstract Syntax Tree)*: Representasi terstruktur dari source code yang biasa digunakan oleh parser dan alat static analysis. Linter tidak membangun AST karena kondisi runtime Laravel tetap tidak seluruhnya dapat dibuktikan dari source code.
 - *Attribute*: Fitur metadata deklaratif yang tersedia secara native sejak PHP 8.0. Attribute dapat ditempelkan pada class, method, property, parameter, atau enum case, kemudian dibaca melalui Reflection. Berbeda dari PHPDoc annotation yang berupa komentar, Attribute merupakan bagian resmi dari sintaks PHP dan digunakan framework untuk menyimpan metadata error di dekat enum case yang bersangkutan.
 - *Autofix*: Kemampuan linter mengubah source code secara otomatis untuk memperbaiki temuan. Error Definition Linter hanya melaporkan masalah karena metadata bisnis tidak aman untuk ditebak.
+- *Autoload*: Mekanisme yang memuat file class PHP secara otomatis ketika class tersebut pertama kali digunakan. Discovery memakai autoloader Composer dan tidak menjalankan `require_once` ke seluruh file.
 
 ## B
 
@@ -24,11 +26,15 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Cache*: Penyimpanan sementara untuk data yang akan digunakan kembali agar tidak perlu dihitung atau dibaca berulang kali. Reader memakai in-memory cache untuk menyimpan metadata error yang sudah di-resolve selama process berjalan.
 - *Camel Case*: Gaya penulisan beberapa kata tanpa spasi dengan huruf kapital pada awal kata berikutnya, misalnya `accessToken`. Sanitizer menormalkannya agar cocok dengan key seperti `access_token`.
+- *Candidate*: Class yang berpotensi menjadi target sebelum kontrak tipenya diperiksa. Discovery membentuk candidate dari Composer autoload lalu menyaringnya menjadi enum error dan FormRequest.
 - *Category*: Kelompok yang menunjukkan asal atau konteks sebuah error, misalnya validation, authentication, atau business rule. Category membantu consumer menentukan cara penanganan tanpa membaca pesan error.
 - *CI (Continuous Integration)*: Proses otomatis yang menjalankan pemeriksaan seperti test dan linter setiap kali perubahan kode digabungkan atau dikirim ke repository.
+- *Classmap*: Daftar yang memetakan FQCN langsung ke lokasi file PHP. Composer mendukungnya untuk class yang tidak mengikuti struktur PSR-4.
 - *Class String*: String yang berisi FQCN dan digunakan untuk merujuk class tanpa membuat object-nya, misalnya `UserError::class`.
 - *CLI (Command-Line Interface)*: Antarmuka berbasis perintah teks yang dijalankan melalui terminal. Artisan merupakan CLI milik Laravel.
 - *Closure*: Fungsi tanpa nama yang dapat disimpan atau diteruskan sebagai nilai. Laravel menggunakannya antara lain untuk rule dan validation tambahan yang ditentukan saat runtime.
+- *Composer*: Dependency manager PHP yang mengelola package dan autoload mapping aplikasi. Discovery menggunakan root `composer.json` sebagai sumber lokasi class.
+- *Concrete Class*: Class yang dapat dibuat menjadi object dan bukan abstract class. Discovery hanya memasukkan concrete FormRequest.
 - *Consumer*: Komponen atau aplikasi yang menggunakan data dari framework, misalnya exception handler, logger, API client, atau generator katalog error.
 - *Container*: Komponen Laravel yang membuat object dan menyediakan dependency yang dibutuhkannya. Linter menggunakannya untuk mengevaluasi FormRequest seperti saat aplikasi berjalan.
 - *Correlation ID*: Identifier yang menghubungkan log dari request atau proses yang sama di beberapa komponen. Framework menerima ID tersebut melalui runtime context, tetapi tidak membuatnya sendiri.
@@ -37,8 +43,10 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 ## D
 
 - *Debug Mode*: Mode pengembangan yang menampilkan informasi tambahan untuk membantu mencari penyebab masalah. Framework tetap tidak mengirim context atau stack trace pada response publik ketika mode ini aktif.
+- *Deduplication*: Proses menghapus item ganda sehingga setiap item hanya muncul satu kali. Discovery melakukan deduplication berdasarkan FQCN.
 - *Dependency*: Komponen lain yang dibutuhkan agar sebuah komponen dapat bekerja. Runtime aplikasi sengaja tidak menjadikan Central Error Registry sebagai dependency agar tetap dapat menghasilkan error secara mandiri.
 - *Deployment*: Proses merilis dan menjalankan versi aplikasi pada suatu environment. Metadata operasional dipisahkan dari source code agar perubahannya tidak selalu membutuhkan deployment baru.
+- *Deterministic*: Sifat proses yang selalu menghasilkan output sama ketika menerima input yang sama. Discovery mengurutkan FQCN agar hasil tidak bergantung pada urutan filesystem.
 - *Discovery*: Proses menemukan seluruh enum Error Definition yang tersedia dalam aplikasi tanpa membaca setiap enum secara manual. Mekanismenya harus tetap bekerja tanpa bergantung pada satu struktur folder tertentu.
 - *Dot Notation*: Cara menulis field bertingkat dengan tanda titik sebagai pemisah level, misalnya `attachments.2.file`. Laravel menggunakannya untuk merepresentasikan input bersarang.
 - *DTO (Data Transfer Object)*: Object sederhana yang membawa sekumpulan data antarbagian aplikasi tanpa memuat proses bisnis. Contohnya, `ResolvedErrorDefinition` membawa metadata error yang sudah dibaca dan siap digunakan.
@@ -55,7 +63,9 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Fail Fast*: Pendekatan yang langsung menghentikan proses ketika konfigurasi atau kondisi yang tidak valid ditemukan. Tujuannya agar kesalahan terlihat di sumbernya dan tidak berubah menjadi hasil kosong atau error lanjutan yang lebih sulit dilacak.
 - *False Positive*: Hasil pemeriksaan yang menyatakan ada masalah padahal kondisi sebenarnya valid. Linter harus menghindarinya agar laporan tetap dapat dipercaya.
+- *Filesystem*: Sistem yang mengatur file dan folder pada media penyimpanan. Discovery memeriksa file PHP di dalam path Composer hanya ketika command dijalankan.
 - *Final Class*: Class PHP yang tidak dapat diwariskan oleh class lain. Framework menggunakannya ketika variasi perilaku melalui subclass memang tidak dibutuhkan.
+- *Fixture*: Data atau class buatan yang digunakan untuk menyiapkan kondisi test. Discovery mengabaikan `autoload-dev` agar fixture tidak masuk katalog production.
 - *FormRequest*: Class Laravel yang menggabungkan authorization dan validation untuk sebuah request. Integrasi validation framework menggunakan FormRequest untuk memetakan rule yang gagal ke definisi error.
 - *FQCN (Fully Qualified Class Name)*: Nama lengkap sebuah class beserta namespace-nya, misalnya `App\Rules\ValidEmployeeId`. FQCN digunakan ketika nama class harus dapat dikenali secara unik.
 
@@ -70,6 +80,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 ## I
 
 - *Immutable*: Sifat data yang tidak dapat diubah setelah dibuat. Metadata immutable aman disimpan dalam cache lintas request karena nilainya tetap selama process berjalan.
+- *Inheritance*: Mekanisme ketika sebuah class mewarisi behavior dari parent class. Discovery tetap mengenali FormRequest yang memperoleh `HasErrorDefinitions` melalui inheritance.
 - *Interface*: Kontrak PHP yang menetapkan kemampuan atau peran sebuah tipe tanpa menentukan seluruh implementasinya. Class atau enum yang mengimplementasikannya menyatakan bahwa kontrak tersebut dipenuhi.
 - *Intersection Type*: Tipe PHP yang mewajibkan sebuah nilai memenuhi beberapa tipe sekaligus dan tersedia sejak PHP 8.1. Penulisan `ErrorCode&BackedEnum` berarti input harus merupakan `ErrorCode` sekaligus `BackedEnum`.
 - *ISO 8601 (International Organization for Standardization 8601)*: Standar penulisan tanggal dan waktu yang tidak ambigu, misalnya `2026-07-17T10:30:00+07:00`. Sanitizer menggunakan format ini untuk nilai tanggal.
@@ -96,10 +107,15 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## M
 
+- *Manifest*: File yang menyimpan daftar atau metadata hasil proses sebelumnya agar dapat digunakan kembali. Discovery belum membuat manifest karena in-memory snapshot sudah cukup untuk satu command.
 - *Marker Interface*: Interface tanpa method yang hanya menandai bahwa sebuah tipe dimaksudkan untuk peran tertentu. `ErrorCode` digunakan untuk membedakan enum error dari Backed Enum lain seperti status atau role.
 - *Microservice*: Layanan kecil yang dikembangkan dan dijalankan secara terpisah untuk menangani kemampuan tertentu. Framework tidak mewajibkan arsitektur ini.
 - *Middleware*: Komponen yang memproses request sebelum atau sesudah logic utama aplikasi. Middleware dapat menyediakan correlation ID sebelum exception terjadi.
 - *Monolith*: Arsitektur aplikasi yang menempatkan banyak fitur atau modul dalam satu aplikasi yang dirilis bersama. Struktur berbasis domain tetap dapat digunakan tanpa harus memecah aplikasi menjadi microservice.
+
+## N
+
+- *Namespace*: Prefix yang mengelompokkan class PHP dan mencegah bentrok nama antarbagian aplikasi. PSR-4 memetakan namespace ke lokasi folder.
 
 ## O
 
@@ -113,6 +129,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Pipeline*: Rangkaian komponen yang memproses data atau kejadian secara berurutan. Reporter terhubung ke pipeline exception Laravel agar error dicatat pada satu boundary.
 - *Placeholder*: Penanda dalam template pesan yang akan diganti dengan nilai sebenarnya, misalnya `:attribute` atau `:min`. Laravel memproses placeholder agar pesan tetap sesuai dengan field dan parameter validation.
 - *PSR-3 (PHP Standards Recommendation 3)*: Standar interface logger pada ekosistem PHP. Framework menggunakannya agar logging tidak bergantung pada satu library atau tujuan log tertentu.
+- *PSR-4 (PHP Standards Recommendation 4)*: Standar autoload yang memetakan namespace dan nama class ke struktur file. Discovery menggunakannya untuk membentuk candidate FQCN.
 - *Pure Enum*: Enum PHP yang case-nya hanya memiliki nama tanpa nilai dasar `string` atau `int`. Framework memilih Backed Enum karena error code memerlukan nilai string yang stabil.
 
 ## R
@@ -141,6 +158,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Side Effect*: Perubahan atau tindakan di luar nilai yang dikembalikan sebuah method, misalnya menulis log atau mengirim event. Logging tidak ditempatkan di dalam exception agar data carrier tidak memiliki side effect.
 - *Singleton*: Pola penggunaan satu instance object yang sama selama lifecycle container atau process. Reader direkomendasikan sebagai singleton agar cache internalnya dapat digunakan kembali.
 - *SLA (Service Level Agreement)*: Kesepakatan mengenai target kualitas layanan, seperti waktu respons, ketersediaan, atau waktu penyelesaian gangguan. Category dan severity dapat membantu menentukan SLA yang relevan.
+- *Snapshot*: Salinan hasil pada satu titik proses yang digunakan kembali tanpa menghitung ulang. Discovery menyimpan satu in-memory snapshot selama command berjalan.
 - *Source of Truth*: Sumber utama yang dianggap paling benar untuk suatu data. Error Definition PHP menjadi source of truth agar message dan metadata tidak didefinisikan ulang oleh setiap consumer.
 - *Stack Trace*: Rekaman urutan pemanggilan function atau method sebelum exception terjadi. Previous exception dipertahankan agar jejak penyebab awal tidak hilang.
 - *Static Analysis*: Pemeriksaan source code tanpa menjalankan aplikasinya untuk menemukan masalah tipe, kontrak, atau pola kode. Enum dan DTO yang typed membantu alat static analysis mendeteksi kesalahan lebih awal.
@@ -158,6 +176,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Validation Rule*: Aturan yang menentukan apakah sebuah nilai input dapat diterima, misalnya `required`, `email`, atau custom rule. Rule yang gagal dipetakan ke definisi error yang sesuai.
 - *ValidationException*: Exception Laravel yang membawa informasi validation failure. Integrasi framework mempertahankan perilaku exception ini sambil menambahkan definisi error yang telah di-resolve.
+- *Vendor Directory*: Folder `vendor/` yang berisi dependency Composer. Discovery tidak memindainya agar class package lain tidak otomatis masuk katalog aplikasi.
 
 ## W
 
