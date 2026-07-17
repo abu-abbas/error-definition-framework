@@ -9,8 +9,11 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Abstract Class*: Class yang tidak dapat dibuat langsung dan biasanya menjadi dasar bagi class lain. Discovery hanya mengembalikan concrete FormRequest yang benar-benar dapat digunakan.
 - *ADR (Architecture Decision Record)*: Dokumen yang mencatat sebuah keputusan arsitektur, alasan pemilihannya, alternatif yang dipertimbangkan, dan konsekuensinya. Dokumen pada bagian Decisions menggunakan pendekatan ini.
 - *API (Application Programming Interface)*: Kontrak yang menentukan cara aplikasi atau komponen berkomunikasi. Dalam framework ini, API dapat berupa public class, method, interface, atau struktur response.
+- *Artifact*: File hasil suatu proses build atau generation yang digunakan oleh proses lain. Framework menghasilkan TypeScript error codes dan JSON catalog sebagai artifact.
 - *Artisan*: Command-line interface bawaan Laravel untuk menjalankan command aplikasi, seperti migration, queue worker, dan Error Definition Linter.
+- *As Const*: Fitur TypeScript yang mempertahankan nilai object sebagai literal dan membuat property-nya readonly. Generator menggunakannya untuk membentuk union type dari `ERROR_CODES`.
 - *AST (Abstract Syntax Tree)*: Representasi terstruktur dari source code yang biasa digunakan oleh parser dan alat static analysis. Linter tidak membangun AST karena kondisi runtime Laravel tetap tidak seluruhnya dapat dibuktikan dari source code.
+- *Atomic Write*: Teknik menulis ke temporary file lalu memindahkannya ke target dalam satu operasi filesystem. Teknik ini mencegah consumer membaca file yang baru tertulis sebagian.
 - *Attribute*: Fitur metadata deklaratif yang tersedia secara native sejak PHP 8.0. Attribute dapat ditempelkan pada class, method, property, parameter, atau enum case, kemudian dibaca melalui Reflection. Berbeda dari PHPDoc annotation yang berupa komentar, Attribute merupakan bagian resmi dari sintaks PHP dan digunakan framework untuk menyimpan metadata error di dekat enum case yang bersangkutan.
 - *Autofix*: Kemampuan linter mengubah source code secara otomatis untuk memperbaiki temuan. Error Definition Linter hanya melaporkan masalah karena metadata bisnis tidak aman untuk ditebak.
 - *Autoload*: Mekanisme yang memuat file class PHP secara otomatis ketika class tersebut pertama kali digunakan. Discovery memakai autoloader Composer dan tidak menjalankan `require_once` ke seluruh file.
@@ -20,6 +23,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Backed Enum*: Jenis enum yang tersedia sejak PHP 8.1 dan mewajibkan setiap case memiliki nilai `string` atau `int` yang unik. Berbeda dari Pure Enum yang hanya memiliki nama case, Backed Enum dapat dikonversi dari dan ke nilai dasarnya melalui `from()`, `tryFrom()`, dan property `value`. Framework menggunakannya agar setiap error memiliki kode string yang stabil untuk disimpan atau dipertukarkan antar-sistem.
 - *Bail*: Aturan validation Laravel yang menghentikan pemeriksaan rule berikutnya pada field yang sama setelah satu rule gagal. Framework mempertahankan perilaku ini agar jumlah dan urutan error tetap mengikuti Laravel.
 - *Breaking Change*: Perubahan kontrak yang dapat membuat consumer lama tidak lagi bekerja tanpa penyesuaian. Mengganti nama atau bentuk field response termasuk breaking change.
+- *Build Cache*: Data hasil build sebelumnya yang digunakan kembali ketika source tidak berubah. Generator menghindari overwrite agar build cache frontend tetap dapat digunakan.
 - *Business Rule*: Aturan yang berasal dari kebutuhan atau proses bisnis, misalnya surat yang sudah disetujui tidak boleh diubah. Business rule berbeda dari validation dasar seperti format email atau field wajib.
 
 ## C
@@ -27,12 +31,15 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Cache*: Penyimpanan sementara untuk data yang akan digunakan kembali agar tidak perlu dihitung atau dibaca berulang kali. Reader memakai in-memory cache untuk menyimpan metadata error yang sudah di-resolve selama process berjalan.
 - *Camel Case*: Gaya penulisan beberapa kata tanpa spasi dengan huruf kapital pada awal kata berikutnya, misalnya `accessToken`. Sanitizer menormalkannya agar cocok dengan key seperti `access_token`.
 - *Candidate*: Class yang berpotensi menjadi target sebelum kontrak tipenya diperiksa. Discovery membentuk candidate dari Composer autoload lalu menyaringnya menjadi enum error dan FormRequest.
+- *Catalog*: Kumpulan Error Definition yang disusun dalam format terstruktur agar dapat dibaca tooling atau sistem lain. JSON catalog membawa seluruh metadata runtime.
 - *Category*: Kelompok yang menunjukkan asal atau konteks sebuah error, misalnya validation, authentication, atau business rule. Category membantu consumer menentukan cara penanganan tanpa membaca pesan error.
 - *CI (Continuous Integration)*: Proses otomatis yang menjalankan pemeriksaan seperti test dan linter setiap kali perubahan kode digabungkan atau dikirim ke repository.
 - *Classmap*: Daftar yang memetakan FQCN langsung ke lokasi file PHP. Composer mendukungnya untuk class yang tidak mengikuti struktur PSR-4.
 - *Class String*: String yang berisi FQCN dan digunakan untuk merujuk class tanpa membuat object-nya, misalnya `UserError::class`.
 - *CLI (Command-Line Interface)*: Antarmuka berbasis perintah teks yang dijalankan melalui terminal. Artisan merupakan CLI milik Laravel.
 - *Closure*: Fungsi tanpa nama yang dapat disimpan atau diteruskan sebagai nilai. Laravel menggunakannya antara lain untuk rule dan validation tambahan yang ditentukan saat runtime.
+- *Collision*: Kondisi ketika dua input berbeda menghasilkan identifier yang sama. Transformasi TypeScript dirancang agar error code unik tidak menghasilkan property key yang bertabrakan.
+- *Compile-time*: Tahap ketika TypeScript memeriksa type sebelum JavaScript dijalankan. Union type membantu mendeteksi error code yang tidak valid pada tahap ini.
 - *Composer*: Dependency manager PHP yang mengelola package dan autoload mapping aplikasi. Discovery menggunakan root `composer.json` sebagai sumber lokasi class.
 - *Concrete Class*: Class yang dapat dibuat menjadi object dan bukan abstract class. Discovery hanya memasukkan concrete FormRequest.
 - *Consumer*: Komponen atau aplikasi yang menggunakan data dari framework, misalnya exception handler, logger, API client, atau generator katalog error.
@@ -71,7 +78,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## G
 
-- *Generator*: Komponen yang menghasilkan file turunan dari satu sumber data. Framework merencanakan generator untuk membuat katalog JSON dan daftar error code TypeScript dari Error Definition PHP.
+- *Generator*: Komponen yang menghasilkan file turunan dari satu sumber data. Framework menggunakannya untuk membuat katalog JSON dan daftar error code TypeScript dari Error Definition PHP.
 
 ## H
 
@@ -97,6 +104,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## L
 
+- *LF (Line Feed)*: Karakter baris baru yang umum digunakan pada file Unix dan Git. Generator selalu memakai LF agar output konsisten antar-operating system.
 - *Lifecycle*: Rentang waktu sebuah object, process, atau data dibuat, digunakan, hingga dihentikan. Lifecycle menentukan berapa lama cache Reader dapat digunakan kembali.
 - *Linter*: Alat pemeriksaan otomatis yang mencari kesalahan atau ketidakkonsistenan tanpa menjalankan seluruh alur aplikasi. Error Linter direncanakan untuk mengaudit definisi dan mapping error.
 - *Locale*: Pengaturan bahasa dan wilayah yang digunakan aplikasi ketika memilih format atau terjemahan. Locale aktif menentukan bahasa validation message yang dihasilkan Laravel.
@@ -111,11 +119,13 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Marker Interface*: Interface tanpa method yang hanya menandai bahwa sebuah tipe dimaksudkan untuk peran tertentu. `ErrorCode` digunakan untuk membedakan enum error dari Backed Enum lain seperti status atau role.
 - *Microservice*: Layanan kecil yang dikembangkan dan dijalankan secara terpisah untuk menangani kemampuan tertentu. Framework tidak mewajibkan arsitektur ini.
 - *Middleware*: Komponen yang memproses request sebelum atau sesudah logic utama aplikasi. Middleware dapat menyediakan correlation ID sebelum exception terjadi.
+- *Modification Time*: Waktu terakhir sebuah file diubah. Generator mempertahankannya ketika generated content tidak berubah.
 - *Monolith*: Arsitektur aplikasi yang menempatkan banyak fitur atau modul dalam satu aplikasi yang dirilis bersama. Struktur berbasis domain tetap dapat digunakan tanpa harus memecah aplikasi menjadi microservice.
 
 ## N
 
 - *Namespace*: Prefix yang mengelompokkan class PHP dan mencegah bentrok nama antarbagian aplikasi. PSR-4 memetakan namespace ke lokasi folder.
+- *Node.js*: Runtime JavaScript yang umum digunakan oleh tooling frontend. Generator TypeScript tidak bergantung pada Node.js karena file dibuat langsung oleh command Laravel.
 
 ## O
 
@@ -125,9 +135,12 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## P
 
+- *Parser*: Komponen yang membaca text terstruktur dan mengubahnya menjadi data yang dapat diproses program. JSON catalog dapat dibaca menggunakan parser JSON standar.
 - *PHP (PHP: Hypertext Preprocessor)*: Bahasa pemrograman yang digunakan untuk membangun framework ini. Fitur enum, attribute, exception, dan reflection PHP menjadi bagian utama desainnya.
 - *Pipeline*: Rangkaian komponen yang memproses data atau kejadian secara berurutan. Reporter terhubung ke pipeline exception Laravel agar error dicatat pada satu boundary.
 - *Placeholder*: Penanda dalam template pesan yang akan diganti dengan nilai sebenarnya, misalnya `:attribute` atau `:min`. Laravel memproses placeholder agar pesan tetap sesuai dengan field dan parameter validation.
+- *Prettier*: Formatter source code yang umum digunakan pada project JavaScript dan TypeScript. Generator tidak membutuhkannya karena format generated file sudah ditentukan sendiri.
+- *Pretty Print*: Format serialization yang memakai indentation dan baris baru agar data mudah dibaca manusia. JSON catalog menggunakan pretty print dua spasi.
 - *PSR-3 (PHP Standards Recommendation 3)*: Standar interface logger pada ekosistem PHP. Framework menggunakannya agar logging tidak bergantung pada satu library atau tujuan log tertentu.
 - *PSR-4 (PHP Standards Recommendation 4)*: Standar autoload yang memetakan namespace dan nama class ke struktur file. Discovery menggunakannya untuk membentuk candidate FQCN.
 - *Pure Enum*: Enum PHP yang case-nya hanya memiliki nama tanpa nilai dasar `string` atau `int`. Framework memilih Backed Enum karena error code memerlukan nilai string yang stabil.
@@ -151,6 +164,8 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Sanitizer*: Komponen yang membersihkan, menghapus, atau menyamarkan data sensitif sebelum dikirim ke log dan monitoring. Sanitizer mencegah informasi seperti password atau token ikut tersimpan.
 - *Scalar*: Nilai tunggal sederhana seperti string, integer, float, atau boolean. Scalar identifier lebih aman dan ringkas untuk runtime context daripada seluruh object.
+- *Schema*: Kontrak yang menentukan bentuk, field, dan tipe data suatu document. JSON catalog memiliki schema yang ditandai oleh `schemaVersion`.
+- *Schema Version*: Angka yang menunjukkan versi bentuk dan makna field suatu schema. Nilainya berubah ketika catalog mengalami breaking change.
 - *Sentry*: Layanan monitoring yang merekam exception, stack trace, dan context untuk membantu diagnosis masalah aplikasi. Framework tidak bergantung langsung pada Sentry dan menggunakan integrasi logging milik aplikasi.
 - *Serialization*: Proses mengubah object atau data menjadi format yang dapat disimpan atau dipertukarkan, misalnya JSON. Hasil resolve dibuat sederhana agar mudah diserialisasi.
 - *Service Provider*: Class Laravel yang mendaftarkan dan mengaktifkan komponen aplikasi. Framework menggunakannya untuk mengaktifkan renderer tanpa registrasi manual pada setiap aplikasi.
@@ -161,16 +176,25 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Snapshot*: Salinan hasil pada satu titik proses yang digunakan kembali tanpa menghitung ulang. Discovery menyimpan satu in-memory snapshot selama command berjalan.
 - *Source of Truth*: Sumber utama yang dianggap paling benar untuk suatu data. Error Definition PHP menjadi source of truth agar message dan metadata tidak didefinisikan ulang oleh setiap consumer.
 - *Stack Trace*: Rekaman urutan pemanggilan function atau method sebelum exception terjadi. Previous exception dipertahankan agar jejak penyebab awal tidak hilang.
+- *Stale*: Kondisi ketika generated artifact tidak lagi sesuai dengan source terbaru. Mode `--check` gagal apabila menemukan artifact yang stale.
 - *Static Analysis*: Pemeriksaan source code tanpa menjalankan aplikasinya untuk menemukan masalah tipe, kontrak, atau pola kode. Enum dan DTO yang typed membantu alat static analysis mendeteksi kesalahan lebih awal.
 - *Strict Mode*: Mode pemeriksaan yang memperlakukan warning sebagai kegagalan. Linter menyediakan opsi `--strict` untuk project yang ingin menerapkan aturan lebih ketat.
+- *String Literal*: Nilai string yang ditulis langsung dalam source code. Generator menulis TypeScript property key sebagai string literal agar selalu valid.
 - *Structured Log*: Log yang menyimpan informasi dalam field bernama, bukan hanya satu kalimat. Struktur ini memungkinkan pencarian berdasarkan error code, category, severity, atau identifier context.
 - *Suppression*: Pengecualian yang menyuruh linter mengabaikan temuan tertentu. Framework belum menyediakannya agar pelanggaran kontrak tidak mudah disembunyikan.
 
 ## T
 
+- *Temporary File*: File sementara yang dibuat sebelum hasil dipindahkan ke target akhir. Generator menggunakannya sebagai bagian dari atomic write.
 - *Throwable*: Interface dasar PHP untuk semua object yang dapat dilempar, termasuk `Exception` dan `Error`. Parameter previous menerima `Throwable` agar penyebab awal dapat dipertahankan.
 - *Trait*: Mekanisme reuse kode pada PHP yang tersedia sejak PHP 5.4. Trait menambahkan method atau property ke sebuah class tanpa mewajibkan inheritance dari base class tertentu.
 - *Type-safe*: Kondisi ketika bentuk dan tipe data diperiksa secara eksplisit sehingga nilai yang tidak sesuai dapat ditolak lebih awal. Enum, interface, dan DTO mengurangi penggunaan string atau array bebas yang rawan salah ketik.
+- *TypeScript*: Bahasa yang menambahkan type checking pada JavaScript. Framework menghasilkan constant dan union type agar frontend menggunakan error code yang sama dengan backend.
+
+## U
+
+- *Unicode*: Standar representasi karakter dari berbagai bahasa dan sistem tulisan. JSON catalog mempertahankan karakter Unicode tanpa escape yang tidak diperlukan.
+- *Union Type*: Tipe yang menerima salah satu dari beberapa nilai atau tipe yang telah ditentukan. Generated `ErrorCode` membatasi value ke seluruh error code yang tersedia.
 
 ## V
 
@@ -182,3 +206,4 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Whitespace*: Karakter kosong seperti spasi, tab, atau baris baru. Message yang hanya berisi whitespace dianggap kosong oleh linter.
 - *Wildcard*: Tanda `*` yang mewakili index atau bagian input dengan jumlah dinamis. Dalam Laravel validation, `attachments.*.file` dapat cocok dengan `attachments.0.file`, `attachments.1.file`, dan seterusnya.
+- *Workspace*: Lokasi kerja yang dapat berisi satu atau beberapa project. Output TypeScript dapat diarahkan ke frontend workspace yang terpisah dari Laravel.

@@ -15,3 +15,5 @@ Keputusan desain untuk pondasi Error Definition Framework.
 - [1.7 Logging dan Context](./1.7-logging-dan-context.md)
 - [1.8 Validator dan Linter](./1.8-validator-dan-linter.md)
 - [1.9 Error Definition Discovery Mechanism](./1.9-error-definition-discovery-mechanism.md)
+- [1.10 Generator `error-codes.ts`](./1.10-generator-error-codes-typescript.md)
+- [1.11 Generator `error-catalog.json`](./1.11-generator-error-catalog-json.md)

@@ -11,3 +11,4 @@
 - [Logging Integration](./logging-integration.md)
 - [ErrorDefinitionLinter](./error-definition-linter.md)
 - [ErrorDefinitionDiscovery](./error-definition-discovery.md)
+- [Artifact Generation](./artifact-generation.md)
