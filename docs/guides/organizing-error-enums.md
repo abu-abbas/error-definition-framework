@@ -72,7 +72,7 @@ app/
         └── Assignments/Errors/UserRoleAssignmentError.php
 ```
 
-Package tidak boleh bergantung pada salah satu struktur tersebut. Enum dapat didaftarkan melalui konfigurasi atau ditemukan melalui mekanisme discovery yang ditetapkan kemudian.
+Package tidak boleh bergantung pada salah satu struktur tersebut. Cara mendaftarkan atau menemukan enum akan ditetapkan melalui Error Definition Discovery Mechanism pada Stage 1.9.
 
 ## Contoh Ownership
 
