@@ -9,3 +9,4 @@
 - [Validation Integration](./validation-integration.md)
 - [ErrorResponseRenderer](./error-response-renderer.md)
 - [Logging Integration](./logging-integration.md)
+- [ErrorDefinitionLinter](./error-definition-linter.md)

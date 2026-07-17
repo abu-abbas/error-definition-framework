@@ -16,4 +16,4 @@ Sebuah error code terdiri dari:
 
 Error code yang telah digunakan tidak boleh diberikan kepada kondisi lain. Pesan dapat diperbaiki, tetapi identitas error harus tetap stabil agar log, integrasi, dan dokumentasi tidak salah menghubungkan kejadian.
 
-Cara menyusun enum dan prefix dijelaskan pada [panduan pengorganisasian error](../guides/organizing-error-enums.md).
+Cara menyusun enum dan prefix dijelaskan pada [panduan pengorganisasian error](../guides/organizing-error-enums.md). Format kode diperiksa oleh [Error Definition Linter](../decisions/1-error-definition-framework/1.8-validator-dan-linter.md).

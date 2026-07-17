@@ -8,7 +8,10 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *ADR (Architecture Decision Record)*: Dokumen yang mencatat sebuah keputusan arsitektur, alasan pemilihannya, alternatif yang dipertimbangkan, dan konsekuensinya. Dokumen pada bagian Decisions menggunakan pendekatan ini.
 - *API (Application Programming Interface)*: Kontrak yang menentukan cara aplikasi atau komponen berkomunikasi. Dalam framework ini, API dapat berupa public class, method, interface, atau struktur response.
+- *Artisan*: Command-line interface bawaan Laravel untuk menjalankan command aplikasi, seperti migration, queue worker, dan Error Definition Linter.
+- *AST (Abstract Syntax Tree)*: Representasi terstruktur dari source code yang biasa digunakan oleh parser dan alat static analysis. Linter tidak membangun AST karena kondisi runtime Laravel tetap tidak seluruhnya dapat dibuktikan dari source code.
 - *Attribute*: Fitur metadata deklaratif yang tersedia secara native sejak PHP 8.0. Attribute dapat ditempelkan pada class, method, property, parameter, atau enum case, kemudian dibaca melalui Reflection. Berbeda dari PHPDoc annotation yang berupa komentar, Attribute merupakan bagian resmi dari sintaks PHP dan digunakan framework untuk menyimpan metadata error di dekat enum case yang bersangkutan.
+- *Autofix*: Kemampuan linter mengubah source code secara otomatis untuk memperbaiki temuan. Error Definition Linter hanya melaporkan masalah karena metadata bisnis tidak aman untuk ditebak.
 
 ## B
 
@@ -22,8 +25,12 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Cache*: Penyimpanan sementara untuk data yang akan digunakan kembali agar tidak perlu dihitung atau dibaca berulang kali. Reader memakai in-memory cache untuk menyimpan metadata error yang sudah di-resolve selama process berjalan.
 - *Camel Case*: Gaya penulisan beberapa kata tanpa spasi dengan huruf kapital pada awal kata berikutnya, misalnya `accessToken`. Sanitizer menormalkannya agar cocok dengan key seperti `access_token`.
 - *Category*: Kelompok yang menunjukkan asal atau konteks sebuah error, misalnya validation, authentication, atau business rule. Category membantu consumer menentukan cara penanganan tanpa membaca pesan error.
+- *CI (Continuous Integration)*: Proses otomatis yang menjalankan pemeriksaan seperti test dan linter setiap kali perubahan kode digabungkan atau dikirim ke repository.
+- *Class String*: String yang berisi FQCN dan digunakan untuk merujuk class tanpa membuat object-nya, misalnya `UserError::class`.
+- *CLI (Command-Line Interface)*: Antarmuka berbasis perintah teks yang dijalankan melalui terminal. Artisan merupakan CLI milik Laravel.
 - *Closure*: Fungsi tanpa nama yang dapat disimpan atau diteruskan sebagai nilai. Laravel menggunakannya antara lain untuk rule dan validation tambahan yang ditentukan saat runtime.
 - *Consumer*: Komponen atau aplikasi yang menggunakan data dari framework, misalnya exception handler, logger, API client, atau generator katalog error.
+- *Container*: Komponen Laravel yang membuat object dan menyediakan dependency yang dibutuhkannya. Linter menggunakannya untuk mengevaluasi FormRequest seperti saat aplikasi berjalan.
 - *Correlation ID*: Identifier yang menghubungkan log dari request atau proses yang sama di beberapa komponen. Framework menerima ID tersebut melalui runtime context, tetapi tidak membuatnya sendiri.
 - *Credential*: Informasi rahasia yang digunakan untuk membuktikan identitas atau memperoleh akses, seperti password, token, dan API key. Credential harus disamarkan sebelum masuk log.
 
@@ -42,6 +49,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Error Bag*: Wadah Laravel untuk mengelompokkan validation error. Named error bag memungkinkan beberapa form pada halaman yang sama menyimpan error dalam kelompok berbeda.
 - *Exception*: Object yang menandai kegagalan atau kondisi tidak normal saat program berjalan. Exception menghentikan alur normal sampai ditangani oleh application layer yang sesuai.
 - *Exception Handler*: Komponen Laravel yang menerima exception dan menentukan cara melaporkan atau mengubahnya menjadi response. Handler mendelegasikan exception milik framework kepada `ErrorResponseRenderer`.
+- *Exit Code*: Angka yang dikembalikan command kepada sistem operasi ketika selesai. Nilai `0` menandakan berhasil, sedangkan `1` digunakan linter ketika pemeriksaan gagal.
 
 ## F
 
@@ -65,6 +73,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Interface*: Kontrak PHP yang menetapkan kemampuan atau peran sebuah tipe tanpa menentukan seluruh implementasinya. Class atau enum yang mengimplementasikannya menyatakan bahwa kontrak tersebut dipenuhi.
 - *Intersection Type*: Tipe PHP yang mewajibkan sebuah nilai memenuhi beberapa tipe sekaligus dan tersedia sejak PHP 8.1. Penulisan `ErrorCode&BackedEnum` berarti input harus merupakan `ErrorCode` sekaligus `BackedEnum`.
 - *ISO 8601 (International Organization for Standardization 8601)*: Standar penulisan tanggal dan waktu yang tidak ambigu, misalnya `2026-07-17T10:30:00+07:00`. Sanitizer menggunakan format ini untuk nilai tanggal.
+- *Iterable*: Nilai yang dapat ditelusuri satu per satu, seperti array atau object `Traversable`. Linter menerimanya agar target dapat diberikan dari sumber yang berbeda.
 - *ITSM (Information Technology Service Management)*: Praktik untuk merancang, menyediakan, mengelola, dan meningkatkan layanan teknologi informasi. Metadata error dapat membantu proses ITSM seperti klasifikasi insiden, penentuan prioritas, dan penyusunan knowledge base.
 
 ## J
@@ -112,10 +121,12 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Recursive*: Proses yang menerapkan aturan yang sama kembali pada data di dalam data tersebut. Sanitizer bekerja secara recursive agar sensitive key di nested array tetap terlindungi.
 - *Redaction*: Proses menghapus atau menyamarkan bagian data sensitif sebelum data digunakan atau disimpan. Framework menggunakan nilai `[REDACTED]` agar struktur context tetap terlihat tanpa mengekspos nilainya.
 - *Reflection*: Fitur PHP untuk membaca struktur dan metadata kode saat aplikasi berjalan. `ErrorDefinitionReader` menggunakannya untuk membaca attribute dari enum case.
+- *Regex (Regular Expression)*: Pola teks untuk memeriksa atau mencari bentuk string tertentu. Linter menggunakannya untuk memvalidasi format error code.
 - *Registry*: Katalog terpusat yang mengumpulkan definisi error dari berbagai modul atau aplikasi. Registry dapat digunakan untuk pencarian, dokumentasi, dan integrasi operasional.
 - *Renderer*: Komponen yang mengubah exception atau data error menjadi response yang dikirim kepada client. Renderer bertanggung jawab atas format response, bukan Reader atau exception.
 - *Reporter*: Komponen yang mengubah exception menjadi event untuk logging atau monitoring. Reporter tidak mengubah response yang diterima client.
 - *Resource*: Nilai khusus PHP yang mewakili koneksi atau handle eksternal seperti file dan stream. Sanitizer tidak mencoba menyerialisasi isinya.
+- *Rule ID*: Identifier stabil untuk jenis temuan linter, misalnya `EDF003`. Rule ID memudahkan pencarian dan pengujian tanpa bergantung pada kalimat message.
 - *Runtime*: Periode ketika aplikasi sedang berjalan dan memproses request, job, atau command. Informasi runtime dapat berbeda dari metadata error yang bersifat tetap.
 - *Runtime Context*: Informasi mengenai kejadian tertentu ketika aplikasi berjalan, misalnya ID user atau ID dokumen. Data ini berguna untuk logging, tetapi harus disanitasi dan tidak otomatis dikirim kepada client.
 
@@ -133,7 +144,9 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Source of Truth*: Sumber utama yang dianggap paling benar untuk suatu data. Error Definition PHP menjadi source of truth agar message dan metadata tidak didefinisikan ulang oleh setiap consumer.
 - *Stack Trace*: Rekaman urutan pemanggilan function atau method sebelum exception terjadi. Previous exception dipertahankan agar jejak penyebab awal tidak hilang.
 - *Static Analysis*: Pemeriksaan source code tanpa menjalankan aplikasinya untuk menemukan masalah tipe, kontrak, atau pola kode. Enum dan DTO yang typed membantu alat static analysis mendeteksi kesalahan lebih awal.
+- *Strict Mode*: Mode pemeriksaan yang memperlakukan warning sebagai kegagalan. Linter menyediakan opsi `--strict` untuk project yang ingin menerapkan aturan lebih ketat.
 - *Structured Log*: Log yang menyimpan informasi dalam field bernama, bukan hanya satu kalimat. Struktur ini memungkinkan pencarian berdasarkan error code, category, severity, atau identifier context.
+- *Suppression*: Pengecualian yang menyuruh linter mengabaikan temuan tertentu. Framework belum menyediakannya agar pelanggaran kontrak tidak mudah disembunyikan.
 
 ## T
 
@@ -148,4 +161,5 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## W
 
+- *Whitespace*: Karakter kosong seperti spasi, tab, atau baris baru. Message yang hanya berisi whitespace dianggap kosong oleh linter.
 - *Wildcard*: Tanda `*` yang mewakili index atau bagian input dengan jumlah dinamis. Dalam Laravel validation, `attachments.*.file` dapat cocok dengan `attachments.0.file`, `attachments.1.file`, dan seterusnya.
