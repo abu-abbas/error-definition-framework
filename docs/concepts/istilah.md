@@ -14,6 +14,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Backed Enum*: Jenis enum yang tersedia sejak PHP 8.1 dan mewajibkan setiap case memiliki nilai `string` atau `int` yang unik. Berbeda dari Pure Enum yang hanya memiliki nama case, Backed Enum dapat dikonversi dari dan ke nilai dasarnya melalui `from()`, `tryFrom()`, dan property `value`. Framework menggunakannya agar setiap error memiliki kode string yang stabil untuk disimpan atau dipertukarkan antar-sistem.
 - *Bail*: Aturan validation Laravel yang menghentikan pemeriksaan rule berikutnya pada field yang sama setelah satu rule gagal. Framework mempertahankan perilaku ini agar jumlah dan urutan error tetap mengikuti Laravel.
+- *Breaking Change*: Perubahan kontrak yang dapat membuat consumer lama tidak lagi bekerja tanpa penyesuaian. Mengganti nama atau bentuk field response termasuk breaking change.
 - *Business Rule*: Aturan yang berasal dari kebutuhan atau proses bisnis, misalnya surat yang sudah disetujui tidak boleh diubah. Business rule berbeda dari validation dasar seperti format email atau field wajib.
 
 ## C
@@ -25,6 +26,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## D
 
+- *Debug Mode*: Mode pengembangan yang menampilkan informasi tambahan untuk membantu mencari penyebab masalah. Framework tetap tidak mengirim context atau stack trace pada response publik ketika mode ini aktif.
 - *Dependency*: Komponen lain yang dibutuhkan agar sebuah komponen dapat bekerja. Runtime aplikasi sengaja tidak menjadikan Central Error Registry sebagai dependency agar tetap dapat menghasilkan error secara mandiri.
 - *Deployment*: Proses merilis dan menjalankan versi aplikasi pada suatu environment. Metadata operasional dipisahkan dari source code agar perubahannya tidak selalu membutuhkan deployment baru.
 - *Discovery*: Proses menemukan seluruh enum Error Definition yang tersedia dalam aplikasi tanpa membaca setiap enum secara manual. Mekanismenya harus tetap bekerja tanpa bergantung pada satu struktur folder tertentu.
@@ -36,6 +38,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Enum (Enumeration)*: Tipe yang tersedia secara native sejak PHP 8.1 dan membatasi nilai ke dalam daftar case yang telah ditentukan. Framework menggunakan enum agar definisi error eksplisit, mudah ditemukan, dan aman diperiksa oleh static analysis.
 - *Error Bag*: Wadah Laravel untuk mengelompokkan validation error. Named error bag memungkinkan beberapa form pada halaman yang sama menyimpan error dalam kelompok berbeda.
 - *Exception*: Object yang menandai kegagalan atau kondisi tidak normal saat program berjalan. Exception menghentikan alur normal sampai ditangani oleh application layer yang sesuai.
+- *Exception Handler*: Komponen Laravel yang menerima exception dan menentukan cara melaporkan atau mengubahnya menjadi response. Handler mendelegasikan exception milik framework kepada `ErrorResponseRenderer`.
 
 ## F
 
@@ -72,6 +75,8 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Lifecycle*: Rentang waktu sebuah object, process, atau data dibuat, digunakan, hingga dihentikan. Lifecycle menentukan berapa lama cache Reader dapat digunakan kembali.
 - *Linter*: Alat pemeriksaan otomatis yang mencari kesalahan atau ketidakkonsistenan tanpa menjalankan seluruh alur aplikasi. Error Linter direncanakan untuk mengaudit definisi dan mapping error.
+- *Locale*: Pengaturan bahasa dan wilayah yang digunakan aplikasi ketika memilih format atau terjemahan. Locale aktif menentukan bahasa validation message yang dihasilkan Laravel.
+- *Localization*: Proses menyesuaikan teks dengan bahasa atau wilayah pengguna. Validation summary tetap menggunakan mekanisme Laravel agar mengikuti locale aplikasi.
 - *Long-running Process*: Process yang tetap hidup untuk menangani banyak pekerjaan atau request, seperti Laravel Octane dan Queue Worker. Data per-request tidak boleh tertinggal pada process semacam ini.
 
 ## M
@@ -105,6 +110,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Sanitizer*: Komponen yang membersihkan, menghapus, atau menyamarkan data sensitif sebelum dikirim ke log dan monitoring. Sanitizer mencegah informasi seperti password atau token ikut tersimpan.
 - *Serialization*: Proses mengubah object atau data menjadi format yang dapat disimpan atau dipertukarkan, misalnya JSON. Hasil resolve dibuat sederhana agar mudah diserialisasi.
+- *Service Provider*: Class Laravel yang mendaftarkan dan mengaktifkan komponen aplikasi. Framework menggunakannya untuk mengaktifkan renderer tanpa registrasi manual pada setiap aplikasi.
 - *Severity*: Tingkat dampak sebuah error terhadap pengguna, proses bisnis, atau layanan. Nilai ini membantu menentukan prioritas penanganan dan logging.
 - *Singleton*: Pola penggunaan satu instance object yang sama selama lifecycle container atau process. Reader direkomendasikan sebagai singleton agar cache internalnya dapat digunakan kembali.
 - *SLA (Service Level Agreement)*: Kesepakatan mengenai target kualitas layanan, seperti waktu respons, ketersediaan, atau waktu penyelesaian gangguan. Category dan severity dapat membantu menentukan SLA yang relevan.

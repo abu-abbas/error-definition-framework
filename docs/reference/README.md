@@ -7,3 +7,4 @@
 - [ErrorDefinitionReader](./error-definition-reader.md)
 - [ApplicationException](./application-exception.md)
 - [Validation Integration](./validation-integration.md)
+- [ErrorResponseRenderer](./error-response-renderer.md)
