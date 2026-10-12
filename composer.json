@@ -1,0 +1,39 @@
+{
+    "name": "abu-abbas/error-definition-framework",
+    "description": "Framework untuk mendefinisikan, mengelola, dan membagikan error secara terstruktur dan konsisten.",
+    "type": "library",
+    "license": "proprietary",
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Edf\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Edf\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Edf\\Laravel\\ErrorDefinitionServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

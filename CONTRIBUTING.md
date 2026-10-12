@@ -34,9 +34,24 @@ Config key baru wajib:
 - menggunakan `snake_case`;
 - didaftarkan pada [Configuration Reference](./docs/reference/configuration.md) dalam pull request yang sama dengan decision doc yang menetapkannya.
 
+## Kode
+
+Package terdiri dari dua namespace:
+
+- `Edf\Core\` berisi kontrak dan logic PHP murni. Core tidak boleh meng-import `Illuminate\` maupun `Edf\Laravel\` agar update Laravel hanya menyentuh adapter.
+- `Edf\Laravel\` berisi adapter tipis untuk Laravel, seperti service provider dan integrasi framework.
+
+Jalankan test dengan:
+
+```bash
+composer install
+composer test
+```
+
 ## Sebelum Mengirim Perubahan
 
 - Pastikan seluruh link Markdown lokal valid.
 - Pastikan tidak ada whitespace error dengan `git diff --check`.
+- Pastikan `composer test` lulus jika mengubah kode.
 - Perbarui index dokumentasi jika menambah atau memindahkan file.
 - Jangan mengubah keputusan teknis yang sudah disepakati tanpa decision doc baru atau pembaruan yang menjelaskan alasannya.
