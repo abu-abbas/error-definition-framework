@@ -1,0 +1,11 @@
+#!/bin/sh
+# Menjalankan test sebelum push, menggantikan CI selama GitHub Actions tidak tersedia.
+# Lewati sekali dengan: git push --no-verify
+
+if [ ! -x vendor/bin/phpunit ]; then
+    echo "pre-push: vendor/bin/phpunit tidak ditemukan, jalankan 'composer install' terlebih dahulu." >&2
+    exit 1
+fi
+
+echo "pre-push: menjalankan test..."
+vendor/bin/phpunit

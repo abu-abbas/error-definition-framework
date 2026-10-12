@@ -48,6 +48,8 @@ composer install
 composer test
 ```
 
+`composer install` juga memasang pre-push hook dari `.githooks/` melalui `git config core.hooksPath`. Hook menjalankan PHPUnit sebelum `git push` dan membatalkan push jika test gagal. Selama GitHub Actions belum tersedia, hook ini menggantikan CI.
+
 ## Sebelum Mengirim Perubahan
 
 - Pastikan seluruh link Markdown lokal valid.

@@ -1,9 +1,15 @@
 name: tests
 
+# Trigger otomatis (push dan pull_request) dinonaktifkan sementara karena
+# runner GitHub Actions pada akun ini diblokir. Test dijalankan lewat
+# pre-push hook (lihat CONTRIBUTING.md). Kembalikan trigger berikut ketika
+# Actions sudah tersedia:
+#
+#   push:
+#     branches: [main]
+#   pull_request:
 on:
-  push:
-    branches: [main]
-  pull_request:
+  workflow_dispatch:
 
 jobs:
   phpunit:
