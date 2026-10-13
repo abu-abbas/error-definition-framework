@@ -52,3 +52,5 @@ Dokumentasi dibagi berdasarkan tujuan informasi.
 - [2.5 Versioning](./decisions/2-central-error-registry/2.5-versioning.md)
 - [2.6 Pencarian](./decisions/2-central-error-registry/2.6-pencarian.md)
 - [2.7 Sinkronisasi Lintas Aplikasi](./decisions/2-central-error-registry/2.7-sinkronisasi-lintas-aplikasi.md)
+- [2.8 Dashboard Registry](./decisions/2-central-error-registry/2.8-dashboard-registry.md)
+- [2.9 Integrasi dengan Sistem Lain](./decisions/2-central-error-registry/2.9-integrasi-dengan-sistem-lain.md)

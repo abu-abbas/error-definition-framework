@@ -86,6 +86,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 ## H
 
 - *Hash*: Nilai pendek yang dihitung dari isi data dan berubah jika isi tersebut berubah. Registry memakainya untuk mengenali catalog yang isinya sama dengan versi sebelumnya.
+- *HMAC (Hash-based Message Authentication Code)*: Tanda tangan yang dihitung dari isi pesan dan secret bersama, sehingga penerima dapat memastikan pesan berasal dari pengirim yang sah dan tidak diubah. Webhook registry ditandatangani dengan HMAC SHA-256.
 - *HTTP Status (Hypertext Transfer Protocol Status)*: Kode angka pada response HTTP yang menjelaskan hasil sebuah permintaan, misalnya `422` untuk input yang tidak valid atau `404` untuk resource yang tidak ditemukan.
 
 ## I
@@ -215,6 +216,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## W
 
+- *Webhook*: Request HTTP yang dikirim otomatis oleh sebuah sistem ke URL yang didaftarkan ketika terjadi event tertentu. Registry memakainya untuk memberi tahu sistem lain tentang perubahan error code.
 - *Whitespace*: Karakter kosong seperti spasi, tab, atau baris baru. Message yang hanya berisi whitespace dianggap kosong oleh linter.
 - *Wildcard*: Tanda `*` yang mewakili index atau bagian input dengan jumlah dinamis. Dalam Laravel validation, `attachments.*.file` dapat cocok dengan `attachments.0.file`, `attachments.1.file`, dan seterusnya.
 - *Workspace*: Lokasi kerja yang dapat berisi satu atau beberapa project. Output TypeScript dapat diarahkan ke frontend workspace yang terpisah dari Laravel.

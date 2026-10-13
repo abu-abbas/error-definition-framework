@@ -11,3 +11,5 @@ Keputusan desain untuk registry pusat yang mengumpulkan Error Definition dari ba
 - [2.5 Versioning](./2.5-versioning.md)
 - [2.6 Pencarian](./2.6-pencarian.md)
 - [2.7 Sinkronisasi Lintas Aplikasi](./2.7-sinkronisasi-lintas-aplikasi.md)
+- [2.8 Dashboard Registry](./2.8-dashboard-registry.md)
+- [2.9 Integrasi dengan Sistem Lain](./2.9-integrasi-dengan-sistem-lain.md)
