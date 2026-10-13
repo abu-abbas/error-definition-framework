@@ -25,9 +25,9 @@ Alasan dan keputusan desain didokumentasikan secara terpisah pada [Decisions](./
 - [x] [2.1 Publish Catalog dari Aplikasi](./decisions/2-central-error-registry/2.1-publish-catalog-dari-aplikasi.md)
 - [x] [2.2 Validasi Schema](./decisions/2-central-error-registry/2.2-validasi-schema.md)
 - [x] [2.3 Deteksi Error Code Duplikat](./decisions/2-central-error-registry/2.3-deteksi-error-code-duplikat.md)
-- [ ] [2.4 Ownership](./decisions/2-central-error-registry/2.4-ownership.md)
-- [ ] [2.5 Versioning](./decisions/2-central-error-registry/2.5-versioning.md)
-- [ ] Pencarian
-- [ ] Sinkronisasi lintas aplikasi
+- [x] [2.4 Ownership](./decisions/2-central-error-registry/2.4-ownership.md)
+- [x] [2.5 Versioning](./decisions/2-central-error-registry/2.5-versioning.md)
+- [ ] [2.6 Pencarian](./decisions/2-central-error-registry/2.6-pencarian.md)
+- [ ] [2.7 Sinkronisasi Lintas Aplikasi](./decisions/2-central-error-registry/2.7-sinkronisasi-lintas-aplikasi.md)
 - [ ] Dashboard registry
 - [ ] Integrasi dengan sistem lain

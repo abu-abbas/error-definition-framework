@@ -9,3 +9,5 @@ Keputusan desain untuk registry pusat yang mengumpulkan Error Definition dari ba
 - [2.3 Deteksi Error Code Duplikat](./2.3-deteksi-error-code-duplikat.md)
 - [2.4 Ownership](./2.4-ownership.md)
 - [2.5 Versioning](./2.5-versioning.md)
+- [2.6 Pencarian](./2.6-pencarian.md)
+- [2.7 Sinkronisasi Lintas Aplikasi](./2.7-sinkronisasi-lintas-aplikasi.md)
