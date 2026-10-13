@@ -10,6 +10,7 @@ use Edf\Core\Logging\ApplicationExceptionReporter;
 use Edf\Core\Logging\ContextSanitizer;
 use Edf\Laravel\Console\GenerateCommand;
 use Edf\Laravel\Console\LintCommand;
+use Edf\Laravel\Console\PublishCommand;
 use Edf\Laravel\Discovery\ErrorDefinitionDiscovery;
 use Edf\Laravel\Validation\ErrorValidationException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -53,7 +54,7 @@ final class ErrorDefinitionServiceProvider extends ServiceProvider
         ], 'error-definition-config');
 
         if ($this->app->runningInConsole()) {
-            $this->commands([LintCommand::class, GenerateCommand::class]);
+            $this->commands([LintCommand::class, GenerateCommand::class, PublishCommand::class]);
         }
 
         $this->callAfterResolving(ExceptionHandler::class, function (ExceptionHandler $resolved): void {

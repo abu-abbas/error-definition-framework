@@ -34,6 +34,13 @@ public function generate(iterable $definitions): string
 
 Method mengurutkan definition berdasarkan code dan mengembalikan complete JSON file content tanpa menulis file.
 
+```php
+/** @param iterable<ResolvedErrorDefinition> $definitions */
+public function catalog(iterable $definitions): array
+```
+
+Method mengembalikan catalog yang sama dalam bentuk array. Command publish memakainya sebagai isi `catalog` pada payload.
+
 Output contract:
 
 ```json

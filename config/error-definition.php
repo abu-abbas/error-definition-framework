@@ -24,8 +24,34 @@ return [
         // lain bila perlu; parent directory dibuat otomatis.
         'typescript_path' => resource_path('js/generated/error-codes.ts'),
 
-        // Output generated JSON catalog untuk tooling dan publication registry.
+        // Output generated JSON catalog untuk tooling lokal.
         'catalog_path' => storage_path('app/error-definition/error-catalog.json'),
+
+    ],
+
+    'publish' => [
+
+        // Tujuan `error-definition:publish`: 'disk' atau 'http'.
+        'driver' => env('EDF_PUBLISH_DRIVER', 'disk'),
+
+        // Identitas tetap aplikasi berupa slug huruf kecil, misalnya 'surat-masuk'.
+        // Sengaja tidak diambil dari APP_NAME karena nama tampilan dapat berubah.
+        'application' => env('EDF_PUBLISH_APPLICATION'),
+
+        // Driver 'disk': filesystem disk Laravel (local, s3, sftp, ...) dan path
+        // file. {application} diganti identitas aplikasi; file ditimpa setiap publish.
+        'disk' => [
+            'name' => env('EDF_PUBLISH_DISK', 'local'),
+            'path' => 'error-definition/{application}.json',
+        ],
+
+        // Driver 'http': POST payload JSON ke URL ini. Token, jika diisi, dikirim
+        // sebagai bearer token. Timeout dalam detik; tidak ada retry otomatis.
+        'http' => [
+            'url' => env('EDF_PUBLISH_URL'),
+            'token' => env('EDF_PUBLISH_TOKEN'),
+            'timeout' => 10,
+        ],
 
     ],
 

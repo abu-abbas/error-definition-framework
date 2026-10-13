@@ -110,6 +110,7 @@ php artisan error-definition:generate
 
 - `lint` exits with 1 on errors (`--strict` also fails on warnings). Fix every `EDFxxx` and `VALxxx` finding; do not silence them.
 - `generate` writes `error-codes.ts` (default `resources/js/generated/`) and `error-catalog.json`. Never edit these files by hand. Projects that commit them can check freshness with `php artisan error-definition:generate --check`.
+- `error-definition:publish --revision=<sha>` sends the full catalog to the destination in `config('error-definition.publish')` (`disk` or `http`). It belongs in a CI step separate from deployment; do not call it from application code. It needs `EDF_PUBLISH_APPLICATION` set to a lowercase slug.
 
 ## Frontend
 

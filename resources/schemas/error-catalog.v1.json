@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/abu-abbas/error-definition-framework/resources/schemas/error-catalog.v1.json",
+  "title": "EDF error catalog, schemaVersion 1",
+  "type": "object",
+  "required": ["schemaVersion", "errors"],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "message", "category", "httpStatus", "severity", "retryable"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^[A-Z0-9]+(?:-[A-Z0-9]+)+-\\d{3,}$"
+          },
+          "message": {
+            "type": "string",
+            "pattern": "\\S"
+          },
+          "category": {
+            "enum": ["validation", "authentication", "authorization", "not_found", "business_rule", "workflow", "integration", "system"]
+          },
+          "httpStatus": {
+            "type": "integer",
+            "minimum": 400,
+            "maximum": 599
+          },
+          "severity": {
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "retryable": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

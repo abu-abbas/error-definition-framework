@@ -33,6 +33,7 @@ HTTP/1.1 409 Conflict
 - **Structured logging**: level log mengikuti severity, dan data sensitif di context otomatis disensor.
 - **Linter** (`error-definition:lint`) untuk menangkap kode duplikat, format salah, atau rule validation yang belum dipetakan.
 - **Generator** (`error-definition:generate`) untuk `error-codes.ts` di frontend dan `error-catalog.json`.
+- **Publish catalog** (`error-definition:publish`) ke filesystem disk Laravel (local, S3, SFTP) atau endpoint HTTP.
 - **Agent skill** untuk Claude dan AI coding agent lain, supaya agent menulis error mengikuti framework ini.
 
 ## Kebutuhan
@@ -144,6 +145,16 @@ if (code === ERROR_CODES.SM_WF_001) {
   // ...
 }
 ```
+
+### 5. Publish catalog
+
+Kirim daftar error lengkap aplikasi dari CI ke storage bersama atau endpoint HTTP:
+
+```bash
+EDF_PUBLISH_APPLICATION=surat-masuk php artisan error-definition:publish --revision="$(git rev-parse HEAD)"
+```
+
+Default-nya menulis ke disk `local`. Cara memakai SFTP, S3, atau HTTP ada di [panduan Publish Catalog](./docs/guides/publishing.md).
 
 ## Agent Skill
 
