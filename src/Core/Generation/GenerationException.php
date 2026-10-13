@@ -37,9 +37,14 @@ final class GenerationException extends RuntimeException
         return new self("Error Definition {$source} gagal di-resolve: {$previous->getMessage()}", previous: $previous);
     }
 
+    public static function encodingFailed(string $artifact, Throwable $previous): self
+    {
+        return new self("{$artifact} gagal di-encode: {$previous->getMessage()}", previous: $previous);
+    }
+
     public static function invalidPath(string $configKey): self
     {
-        return new self("Config {$configKey} harus berisi path file.");
+        return new self("Config {$configKey} harus berisi path file yang berbeda dari artifact lain.");
     }
 
     public static function unwritable(string $path, string $reason): self
