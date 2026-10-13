@@ -33,7 +33,7 @@ HTTP/1.1 409 Conflict
 - **Structured logging**: level log mengikuti severity, dan data sensitif di context otomatis disensor.
 - **Linter** (`error-definition:lint`) untuk menangkap kode duplikat, format salah, atau rule validation yang belum dipetakan.
 - **Generator** (`error-definition:generate`) untuk `error-codes.ts` di frontend dan `error-catalog.json`.
-- **Agent skill** untuk AI coding agent, terpasang otomatis lewat Laravel Boost.
+- **Agent skill** untuk Claude dan AI coding agent lain, supaya agent menulis error mengikuti framework ini.
 
 ## Kebutuhan
 
@@ -147,7 +147,18 @@ if (code === ERROR_CODES.SM_WF_001) {
 
 ## Agent Skill
 
-Package menyertakan guideline dan skill untuk AI coding agent (Claude Code, Cursor, Copilot, dan lainnya) agar agent menulis error mengikuti framework ini. Dengan [Laravel Boost](https://laravel.com/docs/boost), jalankan `php artisan boost:install` lalu pilih package ini. Lihat [panduan Agent Skill](./docs/guides/agent-skills.md) untuk cara tanpa Boost.
+Package menyertakan Agent Skill `error-definition-development` agar AI coding agent seperti Claude menulis error mengikuti framework ini, bukan `abort()` atau message bebas.
+
+**Claude Code**: salin skill ke project.
+
+```bash
+mkdir -p .claude/skills
+cp -r vendor/abu-abbas/error-definition-framework/resources/boost/skills/error-definition-development .claude/skills/
+```
+
+**Laravel Boost**: jalankan `php artisan boost:install`, lalu pilih `abu-abbas/error-definition-framework` di daftar third-party guidelines/skills.
+
+Cara pasang di Claude.ai, Claude Desktop, dan agent lain ada di [panduan Agent Skill](./docs/guides/agent-skills.md).
 
 ## Dokumentasi
 
