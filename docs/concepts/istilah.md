@@ -100,6 +100,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 ## J
 
 - *JSON (JavaScript Object Notation)*: Format teks terstruktur untuk pertukaran data antar-aplikasi. API umumnya menggunakannya untuk mengirim kode, pesan, dan metadata error kepada client.
+- *JSON Schema*: Standar untuk mendeskripsikan bentuk dokumen JSON, seperti field wajib, tipe, dan pola nilai, sehingga dokumen dapat divalidasi otomatis oleh tool dalam bahasa apa pun. Registry memakainya untuk memeriksa catalog yang dikirim aplikasi.
 
 ## K
 
