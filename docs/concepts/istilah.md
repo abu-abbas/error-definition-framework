@@ -23,7 +23,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Backed Enum*: Jenis enum yang tersedia sejak PHP 8.1 dan mewajibkan setiap case memiliki nilai `string` atau `int` yang unik. Berbeda dari Pure Enum yang hanya memiliki nama case, Backed Enum dapat dikonversi dari dan ke nilai dasarnya melalui `from()`, `tryFrom()`, dan property `value`. Framework menggunakannya agar setiap error memiliki kode string yang stabil untuk disimpan atau dipertukarkan antar-sistem.
 - *Bail*: Aturan validation Laravel yang menghentikan pemeriksaan rule berikutnya pada field yang sama setelah satu rule gagal. Framework mempertahankan perilaku ini agar jumlah dan urutan error tetap mengikuti Laravel.
-- *Bearer Token*: Token rahasia yang dikirim pada header `Authorization` untuk membuktikan hak akses pemanggil. Command publish memakai token per aplikasi untuk mengirim catalog ke registry.
+- *Bearer Token*: Token rahasia yang dikirim pada header `Authorization` untuk membuktikan hak akses pemanggil. Driver publish `http` mengirim token ini jika `publish.http.token` diisi.
 - *Breaking Change*: Perubahan kontrak yang dapat membuat consumer lama tidak lagi bekerja tanpa penyesuaian. Mengganti nama atau bentuk field response termasuk breaking change.
 - *Build Cache*: Data hasil build sebelumnya yang digunakan kembali ketika source tidak berubah. Generator menghindari overwrite agar build cache frontend tetap dapat digunakan.
 - *Business Rule*: Aturan yang berasal dari kebutuhan atau proses bisnis, misalnya surat yang sudah disetujui tidak boleh diubah. Business rule berbeda dari validation dasar seperti format email atau field wajib.
@@ -53,7 +53,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Debug Mode*: Mode pengembangan yang menampilkan informasi tambahan untuk membantu mencari penyebab masalah. Framework tetap tidak mengirim context atau stack trace pada response publik ketika mode ini aktif.
 - *Deduplication*: Proses menghapus item ganda sehingga setiap item hanya muncul satu kali. Discovery melakukan deduplication berdasarkan FQCN.
-- *Dependency*: Komponen lain yang dibutuhkan agar sebuah komponen dapat bekerja. Runtime aplikasi sengaja tidak menjadikan Central Error Registry sebagai dependency agar tetap dapat menghasilkan error secara mandiri.
+- *Dependency*: Komponen lain yang dibutuhkan agar sebuah komponen dapat bekerja. Runtime aplikasi sengaja tidak menjadikan registry atau sistem penerima catalog sebagai dependency agar tetap dapat menghasilkan error secara mandiri.
 - *Deployment*: Proses merilis dan menjalankan versi aplikasi pada suatu environment. Metadata operasional dipisahkan dari source code agar perubahannya tidak selalu membutuhkan deployment baru.
 - *Deterministic*: Sifat proses yang selalu menghasilkan output sama ketika menerima input yang sama. Discovery mengurutkan FQCN agar hasil tidak bergantung pada urutan filesystem.
 - *Discovery*: Proses menemukan seluruh enum Error Definition yang tersedia dalam aplikasi tanpa membaca setiap enum secara manual. Mekanismenya harus tetap bekerja tanpa bergantung pada satu struktur folder tertentu.
@@ -62,7 +62,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## E
 
-- *Enrichment*: Informasi tambahan yang dilekatkan pada data setelah data tersebut dibuat. Registry menambahkan tim penanggung jawab, panduan penanganan, dan artikel Knowledge Base pada error code tanpa mengubah source aplikasi.
+- *Enrichment*: Informasi tambahan yang dilekatkan pada data setelah data tersebut dibuat, misalnya tim penanggung jawab atau artikel Knowledge Base pada error code. Enrichment dikelola di luar aplikasi dan tidak masuk ke catalog.
 - *Enum (Enumeration)*: Tipe yang tersedia secara native sejak PHP 8.1 dan membatasi nilai ke dalam daftar case yang telah ditentukan. Framework menggunakan enum agar definisi error eksplisit, mudah ditemukan, dan aman diperiksa oleh static analysis.
 - *Error Bag*: Wadah Laravel untuk mengelompokkan validation error. Named error bag memungkinkan beberapa form pada halaman yang sama menyimpan error dalam kelompok berbeda.
 - *Exception*: Object yang menandai kegagalan atau kondisi tidak normal saat program berjalan. Exception menghentikan alur normal sampai ditangani oleh application layer yang sesuai.
@@ -85,12 +85,10 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## H
 
-- *Hash*: Nilai pendek yang dihitung dari isi data dan berubah jika isi tersebut berubah. Registry memakainya untuk mengenali catalog yang isinya sama dengan versi sebelumnya.
 - *HTTP Status (Hypertext Transfer Protocol Status)*: Kode angka pada response HTTP yang menjelaskan hasil sebuah permintaan, misalnya `422` untuk input yang tidak valid atau `404` untuk resource yang tidak ditemukan.
 
 ## I
 
-- *Idempotent*: Sifat operasi yang memberikan hasil sama walaupun dijalankan berulang kali dengan input yang sama. Publish ulang catalog yang sama untuk revision yang sama tidak dicatat sebagai perubahan baru.
 - *Immutable*: Sifat data yang tidak dapat diubah setelah dibuat. Metadata immutable aman disimpan dalam cache lintas request karena nilainya tetap selama process berjalan.
 - *Inheritance*: Mekanisme ketika sebuah class mewarisi behavior dari parent class. Discovery tetap mengenali FormRequest yang memperoleh `HasErrorDefinitions` melalui inheritance.
 - *Interface*: Kontrak PHP yang menetapkan kemampuan atau peran sebuah tipe tanpa menentukan seluruh implementasinya. Class atau enum yang mengimplementasikannya menyatakan bahwa kontrak tersebut dipenuhi.
@@ -102,7 +100,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 ## J
 
 - *JSON (JavaScript Object Notation)*: Format teks terstruktur untuk pertukaran data antar-aplikasi. API umumnya menggunakannya untuk mengirim kode, pesan, dan metadata error kepada client.
-- *JSON Schema*: Standar untuk mendeskripsikan bentuk dokumen JSON, seperti field wajib, tipe, dan pola nilai, sehingga dokumen dapat divalidasi otomatis oleh tool dalam bahasa apa pun. Registry memakainya untuk memeriksa catalog yang dikirim aplikasi.
+- *JSON Schema*: Standar untuk mendeskripsikan bentuk dokumen JSON, seperti field wajib, tipe, dan pola nilai, sehingga dokumen dapat divalidasi otomatis oleh tool dalam bahasa apa pun. Package menyertakan JSON Schema untuk catalog yang di-publish.
 
 ## K
 
@@ -133,7 +131,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Namespace*: Prefix yang mengelompokkan class PHP dan mencegah bentrok nama antarbagian aplikasi. PSR-4 memetakan namespace ke lokasi folder.
 - *Node.js*: Runtime JavaScript yang umum digunakan oleh tooling frontend. Generator TypeScript tidak bergantung pada Node.js karena file dibuat langsung oleh command Laravel.
-- *Normalisasi*: Proses mengubah input ke bentuk standar sebelum dibandingkan, misalnya mengubah huruf kecil menjadi kapital. Pencarian registry menormalisasi kode yang diketik pengguna agar `sm wf 001` menemukan `SM-WF-001`.
+- *Normalisasi*: Proses mengubah input ke bentuk standar sebelum dibandingkan, misalnya mengabaikan huruf besar/kecil dan pemisah sehingga `no_rekening` dianggap sama dengan `noRekening`.
 
 ## O
 
@@ -164,8 +162,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Renderer*: Komponen yang mengubah exception atau data error menjadi response yang dikirim kepada client. Renderer bertanggung jawab atas format response, bukan Reader atau exception.
 - *Reporter*: Komponen yang mengubah exception menjadi event untuk logging atau monitoring. Reporter tidak mengubah response yang diterima client.
 - *Resource*: Nilai khusus PHP yang mewakili koneksi atau handle eksternal seperti file dan stream. Sanitizer tidak mencoba menyerialisasi isinya.
-- *Revision*: Identitas versi source code tertentu, umumnya commit SHA. Registry memakainya untuk mencatat kapan error code muncul, berubah, atau dihapus.
-- *Rollback*: Tindakan mengembalikan aplikasi ke versi sebelumnya, biasanya karena versi baru bermasalah. Registry mengikuti catalog dari versi yang di-rollback sebagai keadaan terkini.
+- *Revision*: Identitas versi source code tertentu, umumnya commit SHA. Command publish menyertakannya agar penerima dapat mencocokkan catalog dengan kode yang menghasilkannya.
 - *Rule ID*: Identifier stabil untuk jenis temuan linter, misalnya `EDF003`. Rule ID memudahkan pencarian dan pengujian tanpa bergantung pada kalimat message.
 - *Runtime*: Periode ketika aplikasi sedang berjalan dan memproses request, job, atau command. Informasi runtime dapat berbeda dari metadata error yang bersifat tetap.
 - *Runtime Context*: Informasi mengenai kejadian tertentu ketika aplikasi berjalan, misalnya ID user atau ID dokumen. Data ini berguna untuk logging, tetapi harus disanitasi dan tidak otomatis dikirim kepada client.
@@ -183,7 +180,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Side Effect*: Perubahan atau tindakan di luar nilai yang dikembalikan sebuah method, misalnya menulis log atau mengirim event. Logging tidak ditempatkan di dalam exception agar data carrier tidak memiliki side effect.
 - *Singleton*: Pola penggunaan satu instance object yang sama selama lifecycle container atau process. Reader direkomendasikan sebagai singleton agar cache internalnya dapat digunakan kembali.
 - *SLA (Service Level Agreement)*: Kesepakatan mengenai target kualitas layanan, seperti waktu respons, ketersediaan, atau waktu penyelesaian gangguan. Category dan severity dapat membantu menentukan SLA yang relevan.
-- *Slug*: Teks pendek huruf kecil dengan tanda hubung sebagai pemisah, misalnya `surat-masuk`. Identitas aplikasi pada registry menggunakan format ini.
+- *Slug*: Teks pendek huruf kecil dengan tanda hubung sebagai pemisah, misalnya `surat-masuk`. Identitas aplikasi pada publish catalog menggunakan format ini.
 - *Snapshot*: Salinan hasil pada satu titik proses yang digunakan kembali tanpa menghitung ulang. Discovery menyimpan satu in-memory snapshot selama command berjalan.
 - *Source of Truth*: Sumber utama yang dianggap paling benar untuk suatu data. Error Definition PHP menjadi source of truth agar message dan metadata tidak didefinisikan ulang oleh setiap consumer.
 - *Stack Trace*: Rekaman urutan pemanggilan function atau method sebelum exception terjadi. Previous exception dipertahankan agar jejak penyebab awal tidak hilang.
