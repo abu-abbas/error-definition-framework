@@ -109,24 +109,11 @@ trait HasErrorDefinitions
 
     private function findErrorCode(string $attribute, string $rule): ErrorCode&BackedEnum
     {
-        $key = $attribute.'.'.$rule;
         $mapping = [...$this->errorCodes(), ...$this->manualErrorCodes];
+        $key = ErrorCodeMap::matchingKey($mapping, $attribute.'.'.$rule);
 
-        if (isset($mapping[$key])) {
+        if ($key !== null) {
             return $mapping[$key];
-        }
-
-        foreach ($mapping as $pattern => $error) {
-            if (! str_contains($pattern, '*')) {
-                continue;
-            }
-
-            // Wildcard hanya mewakili satu segmen, sama seperti pencocokan custom message Laravel.
-            $regex = '#^'.str_replace('\*', '[^.]*', preg_quote($pattern, '#')).'\z#u';
-
-            if (preg_match($regex, $key) === 1) {
-                return $error;
-            }
         }
 
         throw MissingValidationErrorCodeException::for(static::class, $attribute, $rule);
