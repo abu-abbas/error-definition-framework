@@ -35,5 +35,13 @@ enum SuratMasukError: string implements ErrorCode
     )]
     case TTE_UNAVAILABLE = 'SM-INT-001';
 
+    #[ErrorDefinition(
+        message: 'Penyimpanan surat tidak dapat diakses.',
+        category: ErrorCategory::SYSTEM,
+        httpStatus: 500,
+        severity: ErrorSeverity::CRITICAL,
+    )]
+    case STORAGE_DOWN = 'SM-SYS-001';
+
     case UNDEFINED = 'SM-SYS-999';
 }
