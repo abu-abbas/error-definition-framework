@@ -22,6 +22,25 @@ final class ApplicationException extends RuntimeException
 }
 ```
 
+## Static Factory
+
+```php
+/** @param array<string, mixed> $context */
+public static function of(
+    ErrorCode&BackedEnum $error,
+    array $context = [],
+    ?Throwable $previous = null,
+): self
+```
+
+Resolve enum case melalui `ErrorDefinitionReader` lalu membuat exception. Enum case tanpa `ErrorDefinition` menghasilkan `MissingErrorDefinitionException`.
+
+```php
+public static function useReader(ErrorDefinitionReader $reader): void
+```
+
+Menentukan Reader yang dipakai `of()`. Laravel adapter memanggilnya dengan Reader singleton aplikasi; tanpa adapter, `of()` membuat Reader sendiri.
+
 ## Properties
 
 | Property | Type | Keterangan |
