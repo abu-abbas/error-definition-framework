@@ -4,7 +4,7 @@ name: tests
 # - hanya jalan di pull request (bukan lagi di setiap push ke main);
 # - dilewati jika perubahan hanya dokumentasi;
 # - run lama dibatalkan ketika ada push baru ke PR yang sama;
-# - matrix hanya kombinasi terendah dan tertinggi yang didukung;
+# - matrix hanya versi PHP terendah dan tertinggi yang diuji untuk Laravel 13;
 # - dependency Composer di-cache.
 # Pre-push hook tetap menjadi pemeriksaan pertama di lokal.
 on:
@@ -25,14 +25,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        include:
-          - php: '8.2'
-            laravel: '11.*'
-            testbench: '9.*'
-          - php: '8.4'
-            laravel: '12.*'
-            testbench: '10.*'
-    name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
+        php: ['8.3', '8.4']
+    name: PHP ${{ matrix.php }}
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -45,12 +39,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: composer-${{ matrix.php }}-${{ matrix.laravel }}-${{ hashFiles('composer.json') }}
-          restore-keys: composer-${{ matrix.php }}-${{ matrix.laravel }}-
+          key: composer-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+          restore-keys: composer-${{ matrix.php }}-
       - name: Install dependencies
-        run: |
-          composer require "illuminate/support:${{ matrix.laravel }}" --no-interaction --no-update
-          composer require --dev "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-dist --no-interaction --no-progress
       - name: Run tests
         run: vendor/bin/phpunit
