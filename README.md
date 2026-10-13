@@ -147,14 +147,18 @@ if (code === ERROR_CODES.SM_WF_001) {
 
 ## Agent Skill
 
-Package menyertakan Agent Skill `error-definition-development` agar AI coding agent seperti Claude menulis error mengikuti framework ini, bukan `abort()` atau message bebas. Untuk Claude Code, salin skill ke project:
+Package menyertakan Agent Skill `error-definition-development` agar AI coding agent seperti Claude menulis error mengikuti framework ini, bukan `abort()` atau message bebas.
+
+**Claude Code**: salin skill ke project.
 
 ```bash
 mkdir -p .claude/skills
 cp -r vendor/abu-abbas/error-definition-framework/resources/boost/skills/error-definition-development .claude/skills/
 ```
 
-Skill juga bisa di-upload ke Claude.ai, dipasang otomatis lewat Laravel Boost, atau dipakai agent lain. Lihat [panduan Agent Skill](./docs/guides/agent-skills.md).
+**Laravel Boost**: jalankan `php artisan boost:install`, lalu pilih `abu-abbas/error-definition-framework` di daftar third-party guidelines/skills.
+
+Cara pasang di Claude.ai, Claude Desktop, dan agent lain ada di [panduan Agent Skill](./docs/guides/agent-skills.md).
 
 ## Dokumentasi
 
