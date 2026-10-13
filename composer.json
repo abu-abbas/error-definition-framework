@@ -2,7 +2,28 @@
     "name": "abu-abbas/error-definition-framework",
     "description": "Framework untuk mendefinisikan, mengelola, dan membagikan error secara terstruktur dan konsisten.",
     "type": "library",
-    "license": "proprietary",
+    "keywords": [
+        "laravel",
+        "error",
+        "error-handling",
+        "error-codes",
+        "enum",
+        "exception",
+        "validation",
+        "typescript"
+    ],
+    "homepage": "https://github.com/abu-abbas/error-definition-framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "abu-abbas",
+            "homepage": "https://github.com/abu-abbas"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/abu-abbas/error-definition-framework/issues",
+        "source": "https://github.com/abu-abbas/error-definition-framework"
+    },
     "require": {
         "php": "^8.3",
         "illuminate/support": "^13.0",
