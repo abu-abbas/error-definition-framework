@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Edf\Tests\Laravel;
 
-use Edf\Core\ErrorDefinitionReader;
 use Edf\Core\Exceptions\ApplicationException;
 use Edf\Laravel\ErrorDefinitionServiceProvider;
 use Edf\Tests\Fixtures\Logging\CollectingLogger;
@@ -33,8 +32,8 @@ final class ApplicationExceptionReportingTest extends TestCase
     protected function defineRoutes($router): void
     {
         $router->post('/draft', function () {
-            throw new ApplicationException(
-                $this->app->make(ErrorDefinitionReader::class)->read(SuratMasukError::DRAFT_LOCKED),
+            throw ApplicationException::of(
+                SuratMasukError::DRAFT_LOCKED,
                 ['document_id' => 1001, 'nik' => '3273', 'password' => 'rahasia'],
             );
         });

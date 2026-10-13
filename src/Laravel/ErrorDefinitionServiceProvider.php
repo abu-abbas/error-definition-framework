@@ -46,6 +46,8 @@ final class ErrorDefinitionServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        ApplicationException::useReader($this->app->make(ErrorDefinitionReader::class));
+
         $this->publishes([
             __DIR__.'/../../config/error-definition.php' => $this->app->configPath('error-definition.php'),
         ], 'error-definition-config');

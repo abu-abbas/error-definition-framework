@@ -9,10 +9,8 @@ Panduan ini menerapkan [Decision 1.7](../decisions/1-error-definition-framework/
 Berikan identifier minimum yang membantu tim menemukan kejadian terkait:
 
 ```php
-$exception = new ApplicationException(
-    definition: $reader->read(
-        SuratMasukError::DRAFT_LOCKED,
-    ),
+$exception = ApplicationException::of(
+    SuratMasukError::DRAFT_LOCKED,
     context: [
         'user_id' => $user->id,
         'document_id' => $surat->id,
