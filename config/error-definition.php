@@ -5,7 +5,15 @@ return [
     'logging' => [
 
         // Nama key khusus domain yang value-nya disamarkan pada log context.
-        // Daftar ini menambah baseline package dan tidak dapat menghapusnya.
+        // Daftar ini menambah baseline package (password, token, api_key, dst.)
+        // dan tidak dapat menghapusnya. Pencocokan mengabaikan huruf besar/kecil
+        // serta pemisah, jadi 'no_rekening' juga cocok dengan 'noRekening'.
+        //
+        // Contoh:
+        //     'additional_sensitive_keys' => ['nik', 'no_rekening', 'nomor_hp'],
+        //
+        //     context ['nik' => '3171...', 'nama' => 'Budi'] tercatat sebagai
+        //     ['nik' => '[REDACTED]', 'nama' => 'Budi'].
         'additional_sensitive_keys' => [],
 
     ],
