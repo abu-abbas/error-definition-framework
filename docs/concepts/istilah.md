@@ -133,6 +133,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Namespace*: Prefix yang mengelompokkan class PHP dan mencegah bentrok nama antarbagian aplikasi. PSR-4 memetakan namespace ke lokasi folder.
 - *Node.js*: Runtime JavaScript yang umum digunakan oleh tooling frontend. Generator TypeScript tidak bergantung pada Node.js karena file dibuat langsung oleh command Laravel.
+- *Normalisasi*: Proses mengubah input ke bentuk standar sebelum dibandingkan, misalnya mengubah huruf kecil menjadi kapital. Pencarian registry menormalisasi kode yang diketik pengguna agar `sm wf 001` menemukan `SM-WF-001`.
 
 ## O
 
