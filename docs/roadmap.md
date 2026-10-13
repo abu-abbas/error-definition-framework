@@ -22,7 +22,7 @@ Alasan dan keputusan desain didokumentasikan secara terpisah pada [Decisions](./
 
 ## Stage 2 — Central Error Registry
 
-- [ ] Publish catalog dari aplikasi
+- [ ] [2.1 Publish Catalog dari Aplikasi](./decisions/2-central-error-registry/2.1-publish-catalog-dari-aplikasi.md)
 - [ ] Validasi schema
 - [ ] Duplicate detection
 - [ ] Ownership

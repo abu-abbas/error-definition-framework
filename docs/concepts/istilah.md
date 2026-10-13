@@ -23,6 +23,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Backed Enum*: Jenis enum yang tersedia sejak PHP 8.1 dan mewajibkan setiap case memiliki nilai `string` atau `int` yang unik. Berbeda dari Pure Enum yang hanya memiliki nama case, Backed Enum dapat dikonversi dari dan ke nilai dasarnya melalui `from()`, `tryFrom()`, dan property `value`. Framework menggunakannya agar setiap error memiliki kode string yang stabil untuk disimpan atau dipertukarkan antar-sistem.
 - *Bail*: Aturan validation Laravel yang menghentikan pemeriksaan rule berikutnya pada field yang sama setelah satu rule gagal. Framework mempertahankan perilaku ini agar jumlah dan urutan error tetap mengikuti Laravel.
+- *Bearer Token*: Token rahasia yang dikirim pada header `Authorization` untuk membuktikan hak akses pemanggil. Command publish memakai token per aplikasi untuk mengirim catalog ke registry.
 - *Breaking Change*: Perubahan kontrak yang dapat membuat consumer lama tidak lagi bekerja tanpa penyesuaian. Mengganti nama atau bentuk field response termasuk breaking change.
 - *Build Cache*: Data hasil build sebelumnya yang digunakan kembali ketika source tidak berubah. Generator menghindari overwrite agar build cache frontend tetap dapat digunakan.
 - *Business Rule*: Aturan yang berasal dari kebutuhan atau proses bisnis, misalnya surat yang sudah disetujui tidak boleh diubah. Business rule berbeda dari validation dasar seperti format email atau field wajib.
@@ -87,6 +88,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## I
 
+- *Idempotent*: Sifat operasi yang memberikan hasil sama walaupun dijalankan berulang kali dengan input yang sama. Publish ulang catalog yang sama untuk revision yang sama tidak dicatat sebagai perubahan baru.
 - *Immutable*: Sifat data yang tidak dapat diubah setelah dibuat. Metadata immutable aman disimpan dalam cache lintas request karena nilainya tetap selama process berjalan.
 - *Inheritance*: Mekanisme ketika sebuah class mewarisi behavior dari parent class. Discovery tetap mengenali FormRequest yang memperoleh `HasErrorDefinitions` melalui inheritance.
 - *Interface*: Kontrak PHP yang menetapkan kemampuan atau peran sebuah tipe tanpa menentukan seluruh implementasinya. Class atau enum yang mengimplementasikannya menyatakan bahwa kontrak tersebut dipenuhi.
@@ -158,6 +160,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Renderer*: Komponen yang mengubah exception atau data error menjadi response yang dikirim kepada client. Renderer bertanggung jawab atas format response, bukan Reader atau exception.
 - *Reporter*: Komponen yang mengubah exception menjadi event untuk logging atau monitoring. Reporter tidak mengubah response yang diterima client.
 - *Resource*: Nilai khusus PHP yang mewakili koneksi atau handle eksternal seperti file dan stream. Sanitizer tidak mencoba menyerialisasi isinya.
+- *Revision*: Identitas versi source code tertentu, umumnya commit SHA. Registry memakainya untuk mencatat kapan error code muncul, berubah, atau dihapus.
 - *Rule ID*: Identifier stabil untuk jenis temuan linter, misalnya `EDF003`. Rule ID memudahkan pencarian dan pengujian tanpa bergantung pada kalimat message.
 - *Runtime*: Periode ketika aplikasi sedang berjalan dan memproses request, job, atau command. Informasi runtime dapat berbeda dari metadata error yang bersifat tetap.
 - *Runtime Context*: Informasi mengenai kejadian tertentu ketika aplikasi berjalan, misalnya ID user atau ID dokumen. Data ini berguna untuk logging, tetapi harus disanitasi dan tidak otomatis dikirim kepada client.
@@ -175,6 +178,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Side Effect*: Perubahan atau tindakan di luar nilai yang dikembalikan sebuah method, misalnya menulis log atau mengirim event. Logging tidak ditempatkan di dalam exception agar data carrier tidak memiliki side effect.
 - *Singleton*: Pola penggunaan satu instance object yang sama selama lifecycle container atau process. Reader direkomendasikan sebagai singleton agar cache internalnya dapat digunakan kembali.
 - *SLA (Service Level Agreement)*: Kesepakatan mengenai target kualitas layanan, seperti waktu respons, ketersediaan, atau waktu penyelesaian gangguan. Category dan severity dapat membantu menentukan SLA yang relevan.
+- *Slug*: Teks pendek huruf kecil dengan tanda hubung sebagai pemisah, misalnya `surat-masuk`. Identitas aplikasi pada registry menggunakan format ini.
 - *Snapshot*: Salinan hasil pada satu titik proses yang digunakan kembali tanpa menghitung ulang. Discovery menyimpan satu in-memory snapshot selama command berjalan.
 - *Source of Truth*: Sumber utama yang dianggap paling benar untuk suatu data. Error Definition PHP menjadi source of truth agar message dan metadata tidak didefinisikan ulang oleh setiap consumer.
 - *Stack Trace*: Rekaman urutan pemanggilan function atau method sebelum exception terjadi. Previous exception dipertahankan agar jejak penyebab awal tidak hilang.
