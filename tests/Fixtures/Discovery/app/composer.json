@@ -1,0 +1,19 @@
+{
+    "name": "edf/discovery-app",
+    "autoload": {
+        "psr-4": {
+            "EdfDiscoveryApp\\": "src/"
+        },
+        "classmap": [
+            "legacy/"
+        ],
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EdfDiscoveryApp\\Tests\\": "tests/"
+        }
+    }
+}
