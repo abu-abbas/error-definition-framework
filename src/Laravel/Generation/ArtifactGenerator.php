@@ -6,6 +6,7 @@ namespace Edf\Laravel\Generation;
 
 use BackedEnum;
 use Edf\Core\ErrorDefinitionReader;
+use Edf\Core\Generation\ErrorCatalogJsonGenerator;
 use Edf\Core\Generation\ErrorCodesTypeScriptGenerator;
 use Edf\Core\Generation\GenerationException;
 use Edf\Core\Lint\ErrorDefinitionRules;
@@ -19,6 +20,7 @@ use Throwable;
  * Reader, lalu membentuk seluruh content artifact di memory sebelum ada write.
  *
  * @see docs/decisions/1-error-definition-framework/1.10-generator-error-codes-typescript.md
+ * @see docs/decisions/1-error-definition-framework/1.11-generator-error-catalog-json.md
  */
 final class ArtifactGenerator
 {
@@ -27,6 +29,7 @@ final class ArtifactGenerator
         private readonly ErrorDefinitionRules $rules,
         private readonly ErrorDefinitionReader $reader,
         private readonly ErrorCodesTypeScriptGenerator $typeScript,
+        private readonly ErrorCatalogJsonGenerator $catalog,
         private readonly Repository $config,
     ) {}
 
@@ -35,10 +38,18 @@ final class ArtifactGenerator
      */
     public function artifacts(): array
     {
+        $typeScriptPath = $this->path('typescript_path');
+        $catalogPath = $this->path('catalog_path');
+
+        if ($typeScriptPath === $catalogPath) {
+            throw GenerationException::invalidPath('error-definition.generation.catalog_path');
+        }
+
         $definitions = $this->definitions();
 
         return [
-            $this->path('typescript_path') => $this->typeScript->generate($definitions),
+            $typeScriptPath => $this->typeScript->generate($definitions),
+            $catalogPath => $this->catalog->generate($definitions),
         ];
     }
 

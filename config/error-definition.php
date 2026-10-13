@@ -16,6 +16,9 @@ return [
         // lain bila perlu; parent directory dibuat otomatis.
         'typescript_path' => resource_path('js/generated/error-codes.ts'),
 
+        // Output generated JSON catalog untuk tooling dan publication registry.
+        'catalog_path' => storage_path('app/error-definition/error-catalog.json'),
+
     ],
 
 ];
