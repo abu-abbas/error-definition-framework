@@ -42,3 +42,7 @@ Dokumentasi dibagi berdasarkan tujuan informasi.
 - [1.9 Error Definition Discovery Mechanism](./decisions/1-error-definition-framework/1.9-error-definition-discovery-mechanism.md)
 - [1.10 Generator `error-codes.ts`](./decisions/1-error-definition-framework/1.10-generator-error-codes-typescript.md)
 - [1.11 Generator `error-catalog.json`](./decisions/1-error-definition-framework/1.11-generator-error-catalog-json.md)
+
+### 2. Central Error Registry
+
+- [2.1 Publish Catalog dari Aplikasi](./decisions/2-central-error-registry/2.1-publish-catalog-dari-aplikasi.md)
