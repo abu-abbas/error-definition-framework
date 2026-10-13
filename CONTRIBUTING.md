@@ -48,7 +48,7 @@ composer install
 composer test
 ```
 
-`composer install` juga memasang pre-push hook dari `.githooks/` melalui `git config core.hooksPath`. Hook menjalankan PHPUnit sebelum `git push` dan membatalkan push jika test gagal. Selama GitHub Actions belum tersedia, hook ini menggantikan CI.
+`composer install` juga memasang pre-push hook dari `.githooks/` melalui `git config core.hooksPath`. Hook menjalankan PHPUnit sebelum `git push` dan membatalkan push jika test gagal. GitHub Actions menjalankan test yang sama pada setiap pull request yang mengubah kode, dengan Laravel 13 pada PHP 8.3 dan PHP 8.4. Perubahan yang hanya menyentuh dokumentasi tidak menjalankan CI.
 
 ## Sebelum Mengirim Perubahan
 
