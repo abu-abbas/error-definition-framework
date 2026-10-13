@@ -83,7 +83,7 @@ Catalog memuat metadata runtime:
 }
 ```
 
-Catalog lokal dapat digunakan tooling atau disiapkan sebagai artifact publish. Jangan menambahkan owner, SLA, atau Knowledge Base ke generated file karena enrichment tersebut dikelola oleh registry.
+Catalog lokal dapat digunakan tooling atau disiapkan sebagai artifact publish. Jangan menambahkan owner, SLA, atau Knowledge Base ke generated file karena enrichment tersebut dikelola di luar aplikasi.
 
 ## Menghasilkan Artifact pada CI
 

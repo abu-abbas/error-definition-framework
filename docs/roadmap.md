@@ -20,14 +20,7 @@ Alasan dan keputusan desain didokumentasikan secara terpisah pada [Decisions](./
 - [x] [1.10 Generator `error-codes.ts`](./decisions/1-error-definition-framework/1.10-generator-error-codes-typescript.md)
 - [x] [1.11 Generator `error-catalog.json`](./decisions/1-error-definition-framework/1.11-generator-error-catalog-json.md)
 
-## Stage 2 — Central Error Registry
+## Stage 2 — Publish Catalog
 
-- [x] [2.1 Publish Catalog dari Aplikasi](./decisions/2-central-error-registry/2.1-publish-catalog-dari-aplikasi.md)
-- [x] [2.2 Validasi Schema](./decisions/2-central-error-registry/2.2-validasi-schema.md)
-- [x] [2.3 Deteksi Error Code Duplikat](./decisions/2-central-error-registry/2.3-deteksi-error-code-duplikat.md)
-- [x] [2.4 Ownership](./decisions/2-central-error-registry/2.4-ownership.md)
-- [x] [2.5 Versioning](./decisions/2-central-error-registry/2.5-versioning.md)
-- [ ] [2.6 Pencarian](./decisions/2-central-error-registry/2.6-pencarian.md)
-- [ ] [2.7 Sinkronisasi Lintas Aplikasi](./decisions/2-central-error-registry/2.7-sinkronisasi-lintas-aplikasi.md)
-- [ ] Dashboard registry
-- [ ] Integrasi dengan sistem lain
+- [x] [2.1 Publish Catalog dari Aplikasi](./decisions/2-publish-catalog/2.1-publish-catalog-dari-aplikasi.md)
+- [x] [2.2 Validasi Schema](./decisions/2-publish-catalog/2.2-validasi-schema.md)

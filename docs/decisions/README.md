@@ -18,4 +18,4 @@ Semua decision doc baru dimulai dari [template ADR](./_template.md).
 ## Stages
 
 - [1. Error Definition Framework](./1-error-definition-framework/)
-- [2. Central Error Registry](./2-central-error-registry/)
+- [2. Publish Catalog](./2-publish-catalog/)
