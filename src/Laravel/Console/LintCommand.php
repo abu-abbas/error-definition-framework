@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Edf\Laravel\Console;
 
-use Edf\Core\Lint\LintLevel;
 use Edf\Laravel\Discovery\ErrorDefinitionDiscovery;
 use Edf\Laravel\Lint\ErrorDefinitionLinter;
 use Illuminate\Console\Command;
@@ -16,6 +15,8 @@ use Illuminate\Console\Command;
  */
 final class LintCommand extends Command
 {
+    use PrintsLintFindings;
+
     protected $signature = 'error-definition:lint
         {--strict : Warning juga menghasilkan exit code 1}';
 
@@ -26,22 +27,7 @@ final class LintCommand extends Command
         $targets = $discovery->discover();
         $report = $linter->lint($targets->errorEnums, $targets->formRequests);
 
-        $errors = 0;
-        $warnings = 0;
-
-        foreach ($report->findings as $finding) {
-            $finding->level === LintLevel::ERROR ? $errors++ : $warnings++;
-
-            $this->line(sprintf('%-7s %s  %s', strtoupper($finding->level->value), $finding->ruleId, $finding->source));
-            $this->line('        '.$finding->message);
-            $this->newLine();
-        }
-
-        $this->line(sprintf(
-            '%d %s, %d %s',
-            $errors, $errors === 1 ? 'error' : 'errors',
-            $warnings, $warnings === 1 ? 'warning' : 'warnings',
-        ));
+        $this->printFindings($report->findings);
 
         return $report->hasErrors() || ($this->option('strict') && $report->hasWarnings())
             ? self::FAILURE

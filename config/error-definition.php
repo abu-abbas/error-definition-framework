@@ -10,4 +10,12 @@ return [
 
     ],
 
+    'generation' => [
+
+        // Output generated TypeScript error codes. Arahkan ke workspace frontend
+        // lain bila perlu; parent directory dibuat otomatis.
+        'typescript_path' => resource_path('js/generated/error-codes.ts'),
+
+    ],
+
 ];
