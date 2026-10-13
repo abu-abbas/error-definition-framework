@@ -11,6 +11,20 @@ Framework untuk mendefinisikan, mengelola, dan membagikan error secara terstrukt
 - Frontend menggunakan hasil generate, bukan mendefinisikan ulang error.
 - Runtime aplikasi tidak bergantung pada Central Error Registry.
 
+## Instalasi
+
+Membutuhkan PHP 8.3 atau lebih baru dan Laravel 13.
+
+```bash
+composer require abu-abbas/error-definition-framework
+```
+
+Service provider terdaftar otomatis melalui Laravel package discovery. Untuk mengubah konfigurasi, publish file config:
+
+```bash
+php artisan vendor:publish --tag=error-definition-config
+```
+
 ## Quick Example
 
 ```php
@@ -36,3 +50,7 @@ Mulai dari [documentation index](./docs/README.md).
 - [API reference](./docs/reference/)
 - [Roadmap](./docs/roadmap.md)
 - [Contributing](./CONTRIBUTING.md)
+
+## License
+
+MIT. Lihat [LICENSE](./LICENSE).
