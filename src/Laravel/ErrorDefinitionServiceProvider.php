@@ -8,6 +8,8 @@ use Edf\Core\ErrorDefinitionReader;
 use Edf\Core\Exceptions\ApplicationException;
 use Edf\Core\Logging\ApplicationExceptionReporter;
 use Edf\Core\Logging\ContextSanitizer;
+use Edf\Laravel\Console\LintCommand;
+use Edf\Laravel\Discovery\ErrorDefinitionDiscovery;
 use Edf\Laravel\Validation\ErrorValidationException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler;
@@ -29,6 +31,9 @@ final class ErrorDefinitionServiceProvider extends ServiceProvider
             $app['config']->get('error-definition.logging.additional_sensitive_keys', []),
         ));
         $this->app->singleton(ApplicationExceptionReporter::class);
+
+        // Snapshot discovery hanya dibuat ketika command atau tooling memintanya (Decision 1.9).
+        $this->app->singleton(ErrorDefinitionDiscovery::class, fn ($app) => new ErrorDefinitionDiscovery($app->basePath()));
     }
 
     public function boot(): void
@@ -36,6 +41,10 @@ final class ErrorDefinitionServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/error-definition.php' => $this->app->configPath('error-definition.php'),
         ], 'error-definition-config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([LintCommand::class]);
+        }
 
         $this->callAfterResolving(ExceptionHandler::class, function (ExceptionHandler $handler): void {
             if (! $handler instanceof Handler) {

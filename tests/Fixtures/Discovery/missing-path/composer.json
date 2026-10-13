@@ -1,0 +1,7 @@
+{
+    "autoload": {
+        "psr-4": {
+            "EdfDiscoveryMissing\\": "does-not-exist/"
+        }
+    }
+}
