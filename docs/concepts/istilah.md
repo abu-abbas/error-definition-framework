@@ -62,6 +62,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## E
 
+- *Enrichment*: Informasi tambahan yang dilekatkan pada data setelah data tersebut dibuat. Registry menambahkan tim penanggung jawab, panduan penanganan, dan artikel Knowledge Base pada error code tanpa mengubah source aplikasi.
 - *Enum (Enumeration)*: Tipe yang tersedia secara native sejak PHP 8.1 dan membatasi nilai ke dalam daftar case yang telah ditentukan. Framework menggunakan enum agar definisi error eksplisit, mudah ditemukan, dan aman diperiksa oleh static analysis.
 - *Error Bag*: Wadah Laravel untuk mengelompokkan validation error. Named error bag memungkinkan beberapa form pada halaman yang sama menyimpan error dalam kelompok berbeda.
 - *Exception*: Object yang menandai kegagalan atau kondisi tidak normal saat program berjalan. Exception menghentikan alur normal sampai ditangani oleh application layer yang sesuai.
@@ -84,6 +85,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## H
 
+- *Hash*: Nilai pendek yang dihitung dari isi data dan berubah jika isi tersebut berubah. Registry memakainya untuk mengenali catalog yang isinya sama dengan versi sebelumnya.
 - *HTTP Status (Hypertext Transfer Protocol Status)*: Kode angka pada response HTTP yang menjelaskan hasil sebuah permintaan, misalnya `422` untuk input yang tidak valid atau `404` untuk resource yang tidak ditemukan.
 
 ## I
@@ -162,6 +164,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 - *Reporter*: Komponen yang mengubah exception menjadi event untuk logging atau monitoring. Reporter tidak mengubah response yang diterima client.
 - *Resource*: Nilai khusus PHP yang mewakili koneksi atau handle eksternal seperti file dan stream. Sanitizer tidak mencoba menyerialisasi isinya.
 - *Revision*: Identitas versi source code tertentu, umumnya commit SHA. Registry memakainya untuk mencatat kapan error code muncul, berubah, atau dihapus.
+- *Rollback*: Tindakan mengembalikan aplikasi ke versi sebelumnya, biasanya karena versi baru bermasalah. Registry mengikuti catalog dari versi yang di-rollback sebagai keadaan terkini.
 - *Rule ID*: Identifier stabil untuk jenis temuan linter, misalnya `EDF003`. Rule ID memudahkan pencarian dan pengujian tanpa bergantung pada kalimat message.
 - *Runtime*: Periode ketika aplikasi sedang berjalan dan memproses request, job, atau command. Informasi runtime dapat berbeda dari metadata error yang bersifat tetap.
 - *Runtime Context*: Informasi mengenai kejadian tertentu ketika aplikasi berjalan, misalnya ID user atau ID dokumen. Data ini berguna untuk logging, tetapi harus disanitasi dan tidak otomatis dikirim kepada client.
