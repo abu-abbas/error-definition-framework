@@ -8,6 +8,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 - *Abstract Class*: Class yang tidak dapat dibuat langsung dan biasanya menjadi dasar bagi class lain. Discovery hanya mengembalikan concrete FormRequest yang benar-benar dapat digunakan.
 - *ADR (Architecture Decision Record)*: Dokumen yang mencatat sebuah keputusan arsitektur, alasan pemilihannya, alternatif yang dipertimbangkan, dan konsekuensinya. Dokumen pada bagian Decisions menggunakan pendekatan ini.
+- *Agent Skill*: Folder berisi `SKILL.md` yang mengajarkan AI coding agent cara mengerjakan tugas tertentu. Agent hanya memuat isi lengkapnya ketika tugas yang sedang dikerjakan cocok dengan deskripsi skill. Package menyertakan skill untuk membuat dan memakai Error Definition.
 - *API (Application Programming Interface)*: Kontrak yang menentukan cara aplikasi atau komponen berkomunikasi. Dalam framework ini, API dapat berupa public class, method, interface, atau struktur response.
 - *Artifact*: File hasil suatu proses build atau generation yang digunakan oleh proses lain. Framework menghasilkan TypeScript error codes dan JSON catalog sebagai artifact.
 - *Artisan*: Command-line interface bawaan Laravel untuk menjalankan command aplikasi, seperti migration, queue worker, dan Error Definition Linter.
@@ -104,6 +105,7 @@ Glosarium ini menjelaskan istilah teknis yang digunakan dalam dokumentasi besert
 
 ## L
 
+- *Laravel Boost*: Package resmi Laravel yang memasang guideline dan Agent Skill untuk AI coding agent. Boost menemukan guideline dan skill dari folder `resources/boost` milik package yang terpasang.
 - *LF (Line Feed)*: Karakter baris baru yang umum digunakan pada file Unix dan Git. Generator selalu memakai LF agar output konsisten antar-operating system.
 - *Lifecycle*: Rentang waktu sebuah object, process, atau data dibuat, digunakan, hingga dihentikan. Lifecycle menentukan berapa lama cache Reader dapat digunakan kembali.
 - *Linter*: Alat pemeriksaan otomatis yang mencari kesalahan atau ketidakkonsistenan tanpa menjalankan seluruh alur aplikasi. Error Linter direncanakan untuk mengaudit definisi dan mapping error.
