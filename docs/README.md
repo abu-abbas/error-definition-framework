@@ -2,7 +2,20 @@
 
 [← Kembali ke repository](../README.md)
 
-Dokumentasi Error Definition Framework dibagi berdasarkan tujuan informasi.
+Error Definition Framework adalah framework untuk mendefinisikan, mengelola, dan membagikan error secara terstruktur dan konsisten.
+
+## Filosofi
+
+- PHP (khususnya Framework Laravel) merupakan source of truth.
+- Setiap error didefinisikan satu kali.
+- Error code menggunakan PHP Backed Enum.
+- Metadata error menggunakan PHP Attribute.
+- Frontend menggunakan hasil generate, bukan mendefinisikan ulang error.
+- Runtime aplikasi tidak bergantung pada Central Error Registry.
+
+## Struktur Dokumentasi
+
+Dokumentasi dibagi berdasarkan tujuan informasi.
 
 | Bagian | Pertanyaan yang dijawab |
 |--------|-------------------------|
