@@ -8,4 +8,5 @@
 - [Menjalankan Error Definition Linter](./linting.md)
 - [Menemukan Error Definition](./discovery.md)
 - [Menghasilkan TypeScript dan JSON Catalog](./generation.md)
+- [Publish Catalog](./publishing.md)
 - [Menggunakan Agent Skill](./agent-skills.md)

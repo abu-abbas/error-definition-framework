@@ -21,6 +21,7 @@ use Throwable;
  *
  * @see docs/decisions/1-error-definition-framework/1.10-generator-error-codes-typescript.md
  * @see docs/decisions/1-error-definition-framework/1.11-generator-error-catalog-json.md
+ * @see docs/decisions/2-publish-catalog/2.1-publish-catalog-dari-aplikasi.md
  */
 final class ArtifactGenerator
 {
@@ -51,6 +52,16 @@ final class ArtifactGenerator
             $typeScriptPath => $this->typeScript->generate($definitions),
             $catalogPath => $this->catalog->generate($definitions),
         ];
+    }
+
+    /**
+     * Catalog di memory untuk publish, tanpa membaca atau menulis catalog_path.
+     *
+     * @return array{schemaVersion: int, errors: list<array<string, mixed>>}
+     */
+    public function catalog(): array
+    {
+        return $this->catalog->catalog($this->definitions());
     }
 
     private function path(string $key): string

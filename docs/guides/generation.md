@@ -83,7 +83,7 @@ Catalog memuat metadata runtime:
 }
 ```
 
-Catalog lokal dapat digunakan tooling atau disiapkan sebagai artifact publish. Jangan menambahkan owner, SLA, atau Knowledge Base ke generated file karena enrichment tersebut dikelola di luar aplikasi.
+Catalog lokal dapat digunakan tooling. Untuk mengirim catalog ke luar aplikasi, gunakan [Publish Catalog](./publishing.md). Jangan menambahkan owner, SLA, atau Knowledge Base ke generated file karena enrichment tersebut dikelola di luar aplikasi.
 
 ## Menghasilkan Artifact pada CI
 
